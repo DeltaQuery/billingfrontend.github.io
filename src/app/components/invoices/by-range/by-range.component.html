@@ -1,0 +1,58 @@
+<div class="container-fluid d-flex justify-content-between">
+    <div class="d-flex">
+        <div id="byRange" [formGroup]="invoiceForm">
+            <mat-form-field appearance="outline" class="">
+                <mat-label>Rango</mat-label>
+                <mat-select #filtro formControlName="FILTRO">
+                    <mat-option value="1">Hoy</mat-option>
+                    <mat-option value="2">Última semana</mat-option>
+                    <mat-option value="3">Mes</mat-option>
+                    <mat-option value="4">Mes anterior</mat-option>
+                    <mat-option value="5">Otro mes</mat-option>
+                    <mat-option value="6">Personalizado</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="filtro.value == 5" appearance="outline" class="">
+                <mat-label>Mes</mat-label>
+                <mat-select #mes formControlName="MES">
+                    <mat-option value="8">Septiembre</mat-option>
+                    <mat-option value="9">Octubre</mat-option>
+                    <mat-option value="10">Noviembre</mat-option>
+                    <mat-option value="11">Diciembre</mat-option>
+                    <mat-option value="0">Enero</mat-option>
+                    <mat-option value="1">Febrero</mat-option>
+                    <mat-option value="2">Marzo</mat-option>
+                    <mat-option value="3">Abril</mat-option>
+                    <mat-option value="4">Mayo</mat-option>
+                    <mat-option value="5">Junio</mat-option>
+                    <mat-option value="6">Julio</mat-option>
+                    <mat-option value="7">Agosto</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="filtro.value == 6" appearance="outline" class="">
+                <mat-label>Personalizado</mat-label>
+                <mat-date-range-input #personalizado [formGroup]="invoiceForm" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Fecha inicial" />
+                    <input matEndDate formControlName="end" placeholder="Fecha final" />
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+                <mat-error *ngIf="invoiceForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date
+                </mat-error>
+                <mat-error *ngIf="invoiceForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button (click)="filterRangeInvoices()" class="search-btn">
+            <mat-icon>search</mat-icon>Buscar
+        </button>
+    </div>
+
+    <div id="action-buttons">
+        <button mat-raised-button color="warn" class="action-btn" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>REGRESAR
+          </button>
+        <app-print-invoice-button class="action-button"></app-print-invoice-button>
+    </div>
+</div>

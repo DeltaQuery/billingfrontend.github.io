@@ -1,0 +1,111 @@
+
+<div id="dashboard-container" class="container-fluid mt-4">
+    <div class="d-flex justify-content-between mb-4">
+    <app-students class="upper-box"></app-students>
+    <app-income class="upper-box"></app-income>
+    <app-debtors class="upper-box"></app-debtors>
+    <app-invoices class="upper-box"></app-invoices> 
+    </div>
+    
+    <div class="bottom-box" id="container">
+            <h1 id="heading" class="text-center"> <mat-icon>insert_chart_outlined</mat-icon> Histórico de Solvencia</h1>
+            <hr>
+            <table id="q-graph">
+                <tbody>
+                    <tr class="qtr" id="q1">
+                        <th scope="row">Septiembre</th>
+                        <td [style.height.px]="solvencyPercentage[0] * 2.73" class="sent bar" id="q1-bar">
+                            <p id="q1-p">{{ solvencyPercentage[0] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q2">
+                        <th scope="row">Octubre</th>
+                        <td [style.height.px]="solvencyPercentage[1] * 2.73" class="sent bar" id="q2-bar">
+                            <p id="q2-p">{{ solvencyPercentage[1] + "%" }} </p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q3">
+                        <th scope="row">Noviembre</th>
+                        <td [style.height.px]="solvencyPercentage[2] * 2.73" class="sent bar" id="q3-bar">
+                            <p id="q3-p">{{ solvencyPercentage[2] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q4">
+                        <th scope="row">Diciembre</th>
+                        <td [style.height.px]="solvencyPercentage[3] * 2.73" class="sent bar" id="q4-bar">
+                            <p id="q4-p">{{ solvencyPercentage[3] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q5">
+                        <th scope="row">Enero</th>
+                        <td [style.height.px]="solvencyPercentage[4] * 2.73" class="sent bar" id="q5-bar">
+                            <p id="q5-p">{{ solvencyPercentage[4] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q6">
+                        <th scope="row">Febrero</th>
+                        <td [style.height.px]="solvencyPercentage[5] * 2.73" class="sent bar" id="q6-bar">
+                            <p id="q6-p">{{ solvencyPercentage[5] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q7">
+                        <th scope="row">Marzo</th>
+                        <td [style.height.px]="solvencyPercentage[6] * 2.73" class="sent bar" id="q7-bar">
+                            <p id="q7-p">{{ solvencyPercentage[6] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q8">
+                        <th scope="row">Abril</th>
+                        <td [style.height.px]="solvencyPercentage[7] * 2.73" class="sent bar" id="q8-bar">
+                            <p id="q8-p">{{ solvencyPercentage[7] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q9">
+                        <th scope="row">Mayo</th>
+                        <td [style.height.px]="solvencyPercentage[8] * 2.73" class="sent bar" id="q9-bar">
+                            <p id="q9-p">{{ solvencyPercentage[8] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q10">
+                        <th scope="row">Junio</th>
+                        <td [style.height.px]="solvencyPercentage[9] * 2.73" class="sent bar" id="q10-bar">
+                            <p id="q10-p">{{ solvencyPercentage[9] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q11">
+                        <th scope="row">Julio</th>
+                        <td [style.height.px]="solvencyPercentage[10] * 2.73" class="sent bar" id="q11-bar">
+                            <p id="q11-p">{{ solvencyPercentage[10] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q12">
+                        <th scope="row">Agosto</th>
+                        <td [style.height.px]="solvencyPercentage[11] * 2.73" class="sent bar" id="q12-bar">
+                            <p id="q12-p">{{ solvencyPercentage[11] + "%" }}</p>
+                        </td>
+                    </tr>
+                    <tr class="qtr" id="q13">
+                    </tr>
+                </tbody>
+            </table>
+        
+            <div id="ticks">
+                <div class="tick" style="height: 55px;">
+                    <p>100%</p>
+                </div>
+                <div class="tick" style="height: 55px;">
+                    <p>80%</p>
+                </div>
+                <div class="tick" style="height: 55px;">
+                    <p>60%</p>
+                </div>
+                <div class="tick" style="height: 55px;">
+                    <p>40%</p>
+                </div>
+                <div class="tick" id="bottom-tick" style="height: 55px;">
+                    <p>20%</p>
+                </div>
+            </div>
+        </div>   
+    </div>
+    

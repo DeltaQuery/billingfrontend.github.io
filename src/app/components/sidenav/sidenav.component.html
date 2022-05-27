@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+<mat-sidenav-container  class="sidenav-container">
+
+    <mat-sidenav  mode="side" opened #drawer class="" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    
+
+<mat-toolbar id="titleToolbar"><span class="list-item-link"><i class='bx bx-layer nav_logo-icon'></i><span>Menu</span> </span></mat-toolbar>
+    <br>
+    <mat-nav-list id="moduleList">
+      <a mat-list-item href="#" routerLink="/inicio" [routerLinkActive]="['active-link']"><span class="list-item-link"><i class='bx bx-grid-alt nav_icon'></i><span>Inicio</span></span></a>
+      <a mat-list-item value="Clientes" href="#" routerLink="/clientes" [routerLinkActive]="['active-link']"><span class="list-item-link"><i class='bx bx-user nav_icon'></i><span>Clientes</span></span></a>
+      <a mat-list-item href="#" routerLink="/alumnos" [routerLinkActive]="['active-link']"><span class="list-item-link"><i class='bx bxs-graduation nav_icon'></i><span>Alumnos</span></span></a>
+      <a mat-list-item href="#" routerLink="/productos" [routerLinkActive]="['active-link']"><span class="list-item-link"><i class='bx bx-purchase-tag-alt'></i><span>Productos</span></span></a>
+      <a mat-list-item href="#" routerLink="/facturas" [routerLinkActive]="['active-link']"><span class="list-item-link"><i class='bx bx-receipt'></i><span>Facturas</span></span></a>
+      <a mat-list-item href="#" routerLink="/reportes" [routerLinkActive]="['active-link']"><span class="list-item-link"><i class='bx bx-library'></i><span>Reportes</span></span></a>
+      <a mat-list-item (click)="logout()" href="#" [routerLinkActive]="['active-link']" id="logout-option"><span class="list-item-link"><i class='bx bx-log-out nav_icon'></i><span>Salir</span></span></a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar id="titleToolbar" color="primary">
+            <button
+              type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()"
+              *ngIf="isHandset$ | async">
+              <mat-icon aria-label="Side nav toggle icon">submenu</mat-icon>
+            </button>
+            <span> {{ _titleService.titleName }} </span>
+            
+          </mat-toolbar>
+
+          <router-outlet>
+          </router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+
+
+
+

@@ -1,0 +1,219 @@
+#print-format {
+  width: 14cm;
+  height: 10cm;
+  margin: auto;
+  font-size: 12px;
+}
+
+#print-format div {
+  overflow: hidden;
+}
+
+.dir-plus-telf {
+  width: 100%;
+}
+
+.customer-address {
+  height: 20px;
+  min-width: 60%;
+}
+
+.student-name {
+  height: 20px;
+  min-width: 65%;
+}
+
+.customer-name {
+  height: 20px;
+  max-width: 70%;
+}
+
+.customer-telf {
+  height: 20px;
+  min-width: 130px;
+  text-align: right;
+}
+
+#left-top {
+  width: 29%;
+}
+
+#right-top {
+  width: 69%;
+}
+
+#middle,
+#second-middle {
+  width: 100%;
+}
+
+#second-middle {
+  margin-top: 6px;
+}
+
+.invoice-minibox {
+  padding: 6px;
+  border: 1px solid black;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.product-concept {
+  width: 63%;
+}
+
+.product-bs {
+  width: 15%;
+}
+
+.product-usd,
+.product-bcv {
+  width: 11%;
+}
+
+.product-concept,
+.product-bs,
+.product-usd,
+.product-bcv {
+  border-bottom: 1px solid black;
+}
+
+.observaciones {
+  width: 40%;
+}
+
+.info-input {
+  width: 60%;
+}
+
+.second-middle-input {
+  width: 38%;
+}
+
+.second-middle-info {
+  width: 25%;
+}
+
+#bottom {
+  width: 100%;
+}
+
+.small-bottom-section {
+  width: 20%;
+}
+
+.big-bottom-section {
+  width: 30%;
+}
+
+#bottom div {
+  text-align: center;
+}
+
+.bottom-subtitle {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.bottom-result {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: 20px;
+}
+
+.type {
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-right: 4px;
+  border-right: 1px solid black;
+}
+
+mat-form-field {
+  margin-top: -10px !important;
+  margin-bottom: -10px !important;
+}
+
+.mat-input-element:disabled {
+  color: #212121;
+}
+
+.data-row {
+  margin-bottom: -8px !important;
+}
+
+#general-data mat-form-field {
+  width: 20%;
+}
+
+#customer-data mat-form-field {
+  width: 25%;
+}
+
+#student-data mat-form-field {
+  width: 25%;
+}
+
+.product-data .productField {
+  width: 40%;
+}
+
+.product-data .moneyField {
+  width: 20%;
+}
+
+.payment-type-input {
+  width: 12.5%;
+}
+
+.payment-info-input {
+  width: 25%;
+}
+
+.payment-other-input {
+  width: 12.5%;
+}
+
+.subtotal-input,
+.total-input {
+  width: 15%;
+}
+
+.comments-input {
+  width: 40%;
+}
+
+//ngClass
+
+.ngTransp {
+  color: white;
+}
+
+//watermark
+
+.hide-watermark {
+    display: none;
+}
+
+.watermark {
+  position: absolute;
+  bottom: 50%;
+  left: 32%;
+  z-index: 999;
+  opacity: 0.4;
+  /* COSMETICS */
+  text-align: right;
+  color: red;
+  //transform: rotate(40deg);
+}
+
+@media print {
+    .watermark {
+        bottom: 70%;
+        left: 12%;
+    }
+ }
+
+.watermark h1 {
+    font-size: 120px;
+}

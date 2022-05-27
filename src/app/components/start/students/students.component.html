@@ -1,0 +1,25 @@
+<div id="container">
+    <h1><mat-icon>school</mat-icon> Alumnos</h1>
+    <hr>
+    <div class="row mb-3">
+        <div class="col-6 d-flex flex-column text-center">
+            <div><span class="number" *ngIf="activeStudents; else ceroActived">{{ activeStudents }} </span><ng-template #ceroActived class="number">0</ng-template></div>
+            <div class="heading">Activos</div>
+        </div>
+        <div class="col-6 d-flex flex-column text-center">
+            <div><span class="number" *ngIf="retiredStudents; else ceroRetired">{{ retiredStudents }} </span><ng-template #ceroRetired class="number">0</ng-template></div>
+            <div class="heading">Retirados</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 d-flex flex-column text-center">
+            <div> <span class="number" *ngIf="scholarStudents; else ceroScholars">{{ scholarStudents }} </span> <ng-template #ceroScholars class="number">0</ng-template></div>
+            <div class="heading">Becados</div>
+        </div>
+        <div class="col-6 d-flex flex-column text-center">
+            <div><span class="number" *ngIf="semiScholarStudents; else ceroSemiScholars">{{ semiScholarStudents }} </span> <ng-template #ceroSemiScholars class="number">0</ng-template> </div>
+            <div class="heading">Semibeca</div>
+        </div>
+    </div>
+    </div>
+    

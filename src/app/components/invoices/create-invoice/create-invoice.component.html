@@ -1,0 +1,524 @@
+<form class="container-fluid invoice-form mt-3" [formGroup]="invoiceForm">
+    <div class="d-flex">
+
+        <div class="left-section">
+            <div class="left-top-section w-100 ps-3 pe-3">
+                <div class="search-plus-student w-40 d-flex justify-content-between">
+                    <div class="customer-search">
+                        <div>
+                            <h3>Búsqueda del Representante</h3>
+                        </div>
+                        <div class="customer-search-input d-flex w-60">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Id. Representante</mat-label>
+                                <input matInput type="text" placeholder="Id del Representante" aria-label="Number"
+                                    formControlName="ID_REPRESENTANTE" [matAutocomplete]="auto">
+
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                    [displayWith]="getOptionText">
+                                    <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                                        {{ customer.CEDULA_REPRESENTANTE + " - " + customer.NOMBRES_REPRESENTANTE }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <button type="button" mat-raised-button class="create-btn" (click)="getCustomerInfo()">
+                                <mat-icon>search</mat-icon>Buscar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="student-data">
+                        <div>
+                            <h3>Datos del Alumno</h3>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline" class="studentName">
+                                <mat-label>Nombre del Alumno</mat-label>
+                                <mat-select [(value)]="student" formControlName="NOMBRES_ALUMNO">
+                                    <mat-option *ngFor="let student of filteredStudents" [value]="student"> {{
+                                        student.NOMBRES_ALUMNO + " " + student.APELLIDOS_ALUMNO }} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="studentYear">
+                                <mat-label>Grado</mat-label>
+                                <input formControlName="GRADO_ALUMNO" matInput placeholder="Grado del alumno">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-data w-100">
+                    <div>
+                        <h3>Datos del Representante</h3>
+                    </div>
+                    <div class="w-100 toma">
+                        <mat-form-field class="customer-type-input" appearance="outline">
+                            <mat-label>Tipo</mat-label>
+                            <input formControlName="TIPO_CLIENTE" matInput placeholder="Tipo">
+                        </mat-form-field>
+                        <mat-form-field class="customer-info-input" appearance="outline">
+                            <mat-label>Id</mat-label>
+                            <input formControlName="ID_CLIENTE" matInput placeholder="Id">
+                        </mat-form-field>
+                        <mat-form-field class="customer-info-input" appearance="outline">
+                            <mat-label>Nombre de Cliente</mat-label>
+                            <input formControlName="NOMBRES_CLIENTE" matInput placeholder="Nombres">
+                        </mat-form-field>
+                        <mat-form-field class="customer-info-input" appearance="outline">
+                            <mat-label>Dirección</mat-label>
+                            <input formControlName="DIRECCION_CLIENTE" matInput placeholder="Dirección">
+                        </mat-form-field>
+                        <mat-form-field class="customer-info-input" appearance="outline">
+                            <mat-label>Teléfono</mat-label>
+                            <input formControlName="TELEFONO_CLIENTE" matInput placeholder="Teléfono del cliente">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="left-bottom-section ps-3 pe-3">
+                <div class="invoice-data">
+                    <div>
+                        <h3>Facturación</h3>
+                    </div>
+                    <div class="d-flex">
+                        <mat-form-field class="productField" appearance="outline">
+                            <mat-label>1. Concepto</mat-label>
+                            <mat-select [(value)]="selectedProductOne" formControlName="CONCEPTO_1">
+                                <mat-option *ngFor="let product of products" [value]="product">{{
+                                    product.CONCEPTO_PRODUCTO }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto USD</mat-label>
+                            <input type="number" formControlName="MONTO_1_USD" matInput placeholder="Monto USD">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto Bs</mat-label>
+                            <input type="number" formControlName="MONTO_1_BS" matInput placeholder="Monto Bs.">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Tasa BCV</mat-label>
+                            <input type="number" formControlName="MONTO_1_BCV" matInput placeholder="Tasa BCV">
+                        </mat-form-field>
+                        <button type="button" mat-raised-button class="clear-btn" (click)="deselectOptionOne()">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                    <div class="d-flex" *ngIf="selectedProductOne">
+                        <mat-form-field class="productField" appearance="outline">
+                            <mat-label>Segundo Concepto</mat-label>
+                            <mat-select [(value)]="selectedProductTwo" formControlName="CONCEPTO_2">
+                                <mat-option *ngFor="let product of products" [value]="product"> {{
+                                    product.CONCEPTO_PRODUCTO }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto USD</mat-label>
+                            <input type="number" formControlName="MONTO_2_USD" matInput placeholder="Monto USD">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto Bs</mat-label>
+                            <input type="number" formControlName="MONTO_2_BS" matInput placeholder="Monto Bs.">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Tasa BCV</mat-label>
+                            <input type="number" formControlName="MONTO_2_BCV" matInput placeholder="Tasa BCV">
+                        </mat-form-field>
+                        <button type="button" mat-raised-button class="clear-btn" (click)="deselectOptionTwo()">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="
+                    (
+                    !(this.invoiceForm.controls['CONCEPTO_2'].value == '' || this.invoiceForm.controls['CONCEPTO_2'].value == undefined || this.invoiceForm.controls['CONCEPTO_2'].value == null)
+                    ||
+                    !(this.invoiceForm.controls['MONTO_2_USD'].value == null  || this.invoiceForm.controls['MONTO_2_USD'].value == '' || this.invoiceForm.controls['MONTO_2_USD'].value <= 0 )
+                    ||
+                    !(this.invoiceForm.controls['MONTO_2_BS'].value == null  || this.invoiceForm.controls['MONTO_2_BS'].value == '' || this.invoiceForm.controls['MONTO_2_BS'].value <= 0 )
+                    ) 
+                    &&
+                    !(
+                    !(this.invoiceForm.controls['CONCEPTO_2'].value == '' || this.invoiceForm.controls['CONCEPTO_2'].value == undefined || this.invoiceForm.controls['CONCEPTO_2'].value == null)
+                    &&
+                    !(this.invoiceForm.controls['MONTO_2_USD'].value == null  || this.invoiceForm.controls['MONTO_2_USD'].value == '' || this.invoiceForm.controls['MONTO_2_USD'].value <= 0 )
+                    &&
+                    !(this.invoiceForm.controls['MONTO_2_BS'].value == null  || this.invoiceForm.controls['MONTO_2_BS'].value == '' || this.invoiceForm.controls['MONTO_2_BS'].value <= 0 )
+                    )
+                    " class="warningField" style="color: red; margin-top: -10px; margin-bottom: 12px;">
+                    Por favor, rellena todos los datos en la fila 2 (concepto, Bs. y USD) o ninguno.</div>
+                    <div class="d-flex" *ngIf="selectedProductTwo">
+                        <mat-form-field class="productField" appearance="outline">
+                            <mat-label>Tercer Concepto</mat-label>
+                            <mat-select #selectTwo [(value)]="selectedProductThree" formControlName="CONCEPTO_3">
+                                <mat-option *ngFor="let product of products" [value]="product"> {{
+                                    product.CONCEPTO_PRODUCTO }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto USD</mat-label>
+                            <input type="number" formControlName="MONTO_3_USD" matInput placeholder="Monto USD">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto Bs</mat-label>
+                            <input type="number" formControlName="MONTO_3_BS" matInput placeholder="Monto Bs.">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Tasa BCV</mat-label>
+                            <input type="number" formControlName="MONTO_3_BCV" matInput placeholder="Tasa BCV">
+                        </mat-form-field>
+                        <button type="button" mat-raised-button class="clear-btn" (click)="deselectOptionThree()">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="
+                    (
+                    !(this.invoiceForm.controls['CONCEPTO_3'].value == '' || this.invoiceForm.controls['CONCEPTO_3'].value == undefined || this.invoiceForm.controls['CONCEPTO_3'].value == null)
+                    ||
+                    !(this.invoiceForm.controls['MONTO_3_USD'].value == null  || this.invoiceForm.controls['MONTO_3_USD'].value == '' || this.invoiceForm.controls['MONTO_3_USD'].value <= 0 )
+                    ||
+                    !(this.invoiceForm.controls['MONTO_3_BS'].value == null  || this.invoiceForm.controls['MONTO_3_BS'].value == '' || this.invoiceForm.controls['MONTO_3_BS'].value <= 0 )
+                    ) 
+                    &&
+                    !(
+                    !(this.invoiceForm.controls['CONCEPTO_3'].value == '' || this.invoiceForm.controls['CONCEPTO_3'].value == undefined || this.invoiceForm.controls['CONCEPTO_3'].value == null)
+                    &&
+                    !(this.invoiceForm.controls['MONTO_3_USD'].value == null  || this.invoiceForm.controls['MONTO_3_USD'].value == '' || this.invoiceForm.controls['MONTO_3_USD'].value <= 0 )
+                    &&
+                    !(this.invoiceForm.controls['MONTO_3_BS'].value == null  || this.invoiceForm.controls['MONTO_3_BS'].value == '' || this.invoiceForm.controls['MONTO_3_BS'].value <= 0 )
+                    )
+                    " class="warningField" style="color: red; margin-top: -10px; margin-bottom: 12px;">
+Por favor, rellena todos los datos en la fila 3 (concepto, Bs. y USD) o ninguno.</div>
+                    <div class="d-flex" *ngIf="selectedProductThree">
+                        <mat-form-field class="productField" appearance="outline">
+                            <mat-label>Cuarto Concepto</mat-label>
+                            <mat-select [(value)]="selectedProductFour" formControlName="CONCEPTO_4">
+                                <mat-option *ngFor="let product of products" [value]="product"> {{
+                                    product.CONCEPTO_PRODUCTO }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto USD</mat-label>
+                            <input type="number" formControlName="MONTO_4_USD" matInput placeholder="Monto USD">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto Bs</mat-label>
+                            <input type="number" formControlName="MONTO_4_BS" matInput placeholder="Monto Bs.">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Tasa BCV</mat-label>
+                            <input type="number" formControlName="MONTO_4_BCV" matInput placeholder="Tasa BCV">
+                        </mat-form-field>
+                        <button type="button" mat-raised-button class="clear-btn" (click)="deselectOptionFour()">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="
+                    (
+                    !(this.invoiceForm.controls['CONCEPTO_4'].value == '' || this.invoiceForm.controls['CONCEPTO_4'].value == undefined || this.invoiceForm.controls['CONCEPTO_4'].value == null)
+                    ||
+                    !(this.invoiceForm.controls['MONTO_4_USD'].value == null  || this.invoiceForm.controls['MONTO_4_USD'].value == '' || this.invoiceForm.controls['MONTO_4_USD'].value <= 0 )
+                    ||
+                    !(this.invoiceForm.controls['MONTO_4_BS'].value == null  || this.invoiceForm.controls['MONTO_4_BS'].value == '' || this.invoiceForm.controls['MONTO_4_BS'].value <= 0 )
+                    ) 
+                    &&
+                    !(
+                    !(this.invoiceForm.controls['CONCEPTO_4'].value == '' || this.invoiceForm.controls['CONCEPTO_4'].value == undefined || this.invoiceForm.controls['CONCEPTO_4'].value == null)
+                    &&
+                    !(this.invoiceForm.controls['MONTO_4_USD'].value == null  || this.invoiceForm.controls['MONTO_4_USD'].value == '' || this.invoiceForm.controls['MONTO_4_USD'].value <= 0 )
+                    &&
+                    !(this.invoiceForm.controls['MONTO_4_BS'].value == null  || this.invoiceForm.controls['MONTO_4_BS'].value == '' || this.invoiceForm.controls['MONTO_4_BS'].value <= 0 )
+                    )
+                    " class="warningField" style="color: red; margin-top: -10px; margin-bottom: 12px;">
+Por favor, rellena todos los datos en la fila 4 (concepto, Bs. y USD) o ninguno.</div>
+                    <div class="d-flex" *ngIf="selectedProductFour">
+                        <mat-form-field class="productField" appearance="outline">
+                            <mat-label>Quinto Concepto</mat-label>
+                            <mat-select [(value)]="selectedProductFive" formControlName="CONCEPTO_5">
+                                <mat-option *ngFor="let product of products" [value]="product"> {{
+                                    product.CONCEPTO_PRODUCTO }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto USD</mat-label>
+                            <input type="number" formControlName="MONTO_5_USD" matInput placeholder="Monto USD">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Monto Bs</mat-label>
+                            <input type="number" formControlName="MONTO_5_BS" matInput placeholder="Monto Bs.">
+                        </mat-form-field>
+                        <mat-form-field class="moneyField" appearance="outline">
+                            <mat-label>Tasa BCV</mat-label>
+                            <input type="number" formControlName="MONTO_5_BCV" matInput placeholder="Tasa BCV">
+                        </mat-form-field>
+                        <button type="button" mat-raised-button class="clear-btn" (click)="deselectOptionFive()">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="
+                    (
+                    !(this.invoiceForm.controls['CONCEPTO_5'].value == '' || this.invoiceForm.controls['CONCEPTO_5'].value == undefined || this.invoiceForm.controls['CONCEPTO_5'].value == null)
+                    ||
+                    !(this.invoiceForm.controls['MONTO_5_USD'].value == null  || this.invoiceForm.controls['MONTO_5_USD'].value == '' || this.invoiceForm.controls['MONTO_5_USD'].value <= 0 )
+                    ||
+                    !(this.invoiceForm.controls['MONTO_5_BS'].value == null  || this.invoiceForm.controls['MONTO_5_BS'].value == '' || this.invoiceForm.controls['MONTO_5_BS'].value <= 0 )
+                    ) 
+                    &&
+                    !(
+                    !(this.invoiceForm.controls['CONCEPTO_5'].value == '' || this.invoiceForm.controls['CONCEPTO_5'].value == undefined || this.invoiceForm.controls['CONCEPTO_5'].value == null)
+                    &&
+                    !(this.invoiceForm.controls['MONTO_5_USD'].value == null  || this.invoiceForm.controls['MONTO_5_USD'].value == '' || this.invoiceForm.controls['MONTO_5_USD'].value <= 0 )
+                    &&
+                    !(this.invoiceForm.controls['MONTO_5_BS'].value == null  || this.invoiceForm.controls['MONTO_5_BS'].value == '' || this.invoiceForm.controls['MONTO_5_BS'].value <= 0 )
+                    )
+                    " class="warningField" style="color: red; margin-top: -10px; margin-bottom: 12px;">
+Por favor, rellena todos los datos en la fila 5 (concepto, Bs. y USD) o ninguno.</div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="general-data w-100 ps-3 pe-3">
+                <div>
+                    <h3>Datos generales</h3>
+                </div>
+                <div>
+                    <mat-form-field class="general-data-input" appearance="outline">
+                        <mat-label>Fecha</mat-label>
+                        <input matInput formControlName="FECHA_REGISTRO" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="general-data-input" appearance="outline">
+                        <mat-label>Ciudad</mat-label>
+                        <input type="text" formControlName="CIUDAD_CLIENTE" matInput
+                            placeholder="Ciudad de elaboración">
+                    </mat-form-field>
+                    <mat-form-field class="general-data-input" appearance="outline">
+                        <mat-label>Código</mat-label>
+                        <input type="number" formControlName="CODIGO_FACTURA" matInput placeholder="Código de factura">
+                    </mat-form-field>
+                    <mat-form-field class="general-data-input" appearance="outline">
+                        <mat-label>Modalidad de pago</mat-label>
+                        <mat-select formControlName="CREDITO_CONTADO">
+                            <mat-option value="Contado">Contado</mat-option>
+                            <mat-option value="Credito">Crédito</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="payment-data w-100 ps-3 pe-3">
+                <div>
+                    <h3>Información del Pago</h3>
+                </div>
+                <div>
+                    <div class="invoicing-data">
+                        <mat-form-field class="payment-type-input" appearance="outline">
+                            <mat-label>Tipo de transacción</mat-label>
+                            <mat-select formControlName="TIPO_TRANSACCION">
+                                <mat-option value="T">T</mat-option>
+                                <mat-option value="P">P</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="payment-info-input" appearance="outline">
+                            <mat-label>N° de Transacción</mat-label>
+                            <input formControlName="NO_TRANSACCION" matInput placeholder="Núm. de Transacción">
+                        </mat-form-field>
+                        <mat-form-field class="payment-info-input" appearance="outline">
+                            <mat-label>Banco</mat-label>
+                            <input formControlName="BANCO" matInput placeholder="Banco">
+                        </mat-form-field>
+                        <mat-form-field class="payment-other-input" appearance="outline">
+                            <mat-label>Efectivo</mat-label>
+                            <input type="number" formControlName="EFECTIVO" matInput placeholder="Efectivo">
+                        </mat-form-field>
+                        <mat-form-field class="payment-other-input" appearance="outline">
+                            <mat-label>IVA</mat-label>
+                            <input formControlName="IVA" matInput placeholder="Iva">
+                        </mat-form-field>
+                    </div>
+                    <div class="subtotal-plus-total">
+                        <mat-form-field class="subtotal-input" appearance="outline">
+                            <mat-label>Subtotal Bs.</mat-label>
+                            <input type="number" formControlName="SUBTOTAL_BS" matInput placeholder="Subtotal en Bs">
+                        </mat-form-field>
+                        <mat-form-field class="subtotal-input" appearance="outline">
+                            <mat-label>Subtotal USD</mat-label>
+                            <input type="number" formControlName="SUBTOTAL_USD" matInput placeholder="Subtotal en USD">
+                        </mat-form-field>
+                        <mat-form-field class="total-input" appearance="outline">
+                            <mat-label>Total Bs.</mat-label>
+                            <input type="number" formControlName="TOTAL_BS" matInput placeholder="Total en Bs">
+                        </mat-form-field>
+                        <mat-form-field class="total-input" appearance="outline">
+                            <mat-label>Total USD</mat-label>
+                            <input type="number" formControlName="TOTAL_USD" matInput placeholder="Total en USD">
+                        </mat-form-field>
+                    </div>
+                    <div class="comments">
+                        <mat-form-field class="comments-input" appearance="outline">
+                            <mat-label>Observaciones</mat-label>
+                            <input type="text" formControlName="OBSERVACIONES" matInput placeholder="Observaciones">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="invoicing-history ps-3 pe-3">
+                <div>
+                    <h3>Histórico de Facturación</h3>
+                </div>
+                <div class="invoicing-history-table">
+                    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" multiTemplateDataRows>
+
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                                <div class="expandedColumn"
+                                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex container-fluid">
+                                            <div class="expanded-box" id="conceptos_col">
+                                                <div>Conceptos:</div>
+                                                <div>
+                                                    <div class="">
+                                                        {{ "1: " + element.CONCEPTO_1 }}
+                                                    </div>
+                                                    <div class="">
+                                                        {{ "USD: " + element.MONTO_1_USD + " | " + "Bs: " +
+                                                        element.MONTO_1_BS }}
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="element.CONCEPTO_2">
+                                                    <div class="">
+                                                        {{ "2: " + element.CONCEPTO_2 }}
+                                                    </div>
+                                                    <div class="">
+                                                        {{ "USD: " + element.MONTO_2_USD + " | " + "Bs: " +
+                                                        element.MONTO_2_BS }}
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="element.CONCEPTO_3">
+                                                    <div class="">
+                                                        {{ "3: " + element.CONCEPTO_3 }}
+                                                    </div>
+                                                    <div class="">
+                                                        {{ "USD: " + element.MONTO_3_USD + " | " + "Bs: " +
+                                                        element.MONTO_3_BS }}
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="element.CONCEPTO_4">
+                                                    <div class="">
+                                                        {{ "4: " + element.CONCEPTO_4 }}
+                                                    </div>
+                                                    <div class="">
+                                                        {{ "USD: " + element.MONTO_4_USD + " | " + "Bs: " +
+                                                        element.MONTO_4_BS }}
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="element.CONCEPTO_5">
+                                                    <div class="">
+                                                        {{ "5: " + element.CONCEPTO_5 }}
+                                                    </div>
+                                                    <div class="">
+                                                        {{ "USD: " + element.MONTO_5_USD + " | " + "Bs: " +
+                                                        element.MONTO_5_BS }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="expanded-box" id="datos_col">
+                                                <div>Datos:</div>
+                                                <div class="">
+                                                    {{ "Operación: " + element.CREDITO_CONTADO }}
+                                                </div>
+                                                <div class="">
+                                                    {{ "Tipo: " + element.TIPO_TRANSACCION }}
+                                                </div>
+                                                <div *ngIf="element.NO_TRANSACCION" class="">
+                                                    {{ "No_Transc.: " + element.NO_TRANSACCION }}
+                                                </div>
+                                                <div *ngIf="element.BANCO" class="">
+                                                    {{ "Banco: " + element.BANCO }}
+                                                </div>
+                                                <div *ngIf="element.EFECTIVO" class="">
+                                                    {{ "Efectivo: " + element.EFECTIVO }}
+                                                </div>
+                                            </div>
+
+                                            <div class="expanded-box" id="valor_col">
+                                                <div>Valor:</div>
+                                                <div class="">
+                                                    {{ "Total USD: " + element.TOTAL_USD }}
+                                                </div>
+                                                <div class="">
+                                                    {{ "Total Bs.: " + element.TOTAL_BS }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="element.OBSERVACIONES" class="expanded-box container-fluid"
+                                            id="otros_col">
+                                            <div class="">
+                                                {{ "Observaciones: " + element.OBSERVACIONES }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CODIGO_FACTURA">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header="CODIGO_FACTURA"> Código </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.CODIGO_FACTURA }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="FECHA_REGISTRO">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_REGISTRO"> Fecha </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.FECHA_REGISTRO | date:'dd-MM-yy' }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CONCEPTO_TOTAL">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header="CONCEPTO_TOTAL"> Concepto </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.CONCEPTO_1 + "|" + element.CONCEPTO_2 +
+                                "|" + element.CONCEPTO_3 + "|" + element.CONCEPTO_4 + "|" + element.CONCEPTO_5 |
+                                productsView }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="TOTAL_USD">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header="TOTAL_USD"> Total </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.TOTAL_USD | currency }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions" id="actions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                            <td mat-cell *matCellDef="let row">
+                              <button mat-icon-button (click)="viewInvoice(row)">
+                                <mat-icon>remove_red_eye</mat-icon>
+                              </button>
+                            </td>
+                          </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"
+                            [class.example-expanded-row]="expandedElement === row"
+                            (click)="expandedElement = expandedElement === row ? null : row">
+                        </tr>
+
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="footer" class="container-fluid">
+    <app-return-button class="action-button me-2"></app-return-button>
+    <button class="me-2" mat-raised-button (click)="clean()">
+        <mat-icon> clear_all</mat-icon> LIMPIAR</button> 
+    <button class=""
+        mat-raised-button color="primary" [disabled]="!invoiceForm.valid" (click)="addInvoice()">
+        <mat-icon>add_shopping_cart</mat-icon> REGISTRAR
+    </button>
+</div>

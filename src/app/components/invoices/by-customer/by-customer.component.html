@@ -1,0 +1,26 @@
+<div class="container-fluid d-flex justify-content-between" id="individualBar">
+    <div class="d-flex">
+        <div id="byCustomer" [formGroup]="invoiceForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Id. Representante</mat-label>
+                <input matInput type="text" placeholder="Id del Representante" aria-label="Number"
+                    formControlName="ID_REPRESENTANTE" [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getOptionText">
+                    <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                        {{ customer.CEDULA_REPRESENTANTE + " - " + customer.NOMBRES_REPRESENTANTE }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <button type="button" mat-raised-button class="search-btn" (click)="getCustomerInvoices()">
+            <mat-icon>search</mat-icon>Buscar
+        </button>
+    </div>
+
+    <div id="action-buttons">
+        <button mat-raised-button color="warn" class="action-btn" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>REGRESAR
+          </button>
+        <app-print-invoice-button class="action-button"></app-print-invoice-button>
+    </div>
+</div>

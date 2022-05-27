@@ -1,0 +1,59 @@
+<div id="principalBar" class="container-fluid d-flex justify-content-between">
+  <div class="d-flex">
+  <button mat-raised-button class="create-btn" (click)="openDialog()">
+    <mat-icon>add</mat-icon>Nuevo
+  </button>
+<mat-form-field class="search-form-field me-4" appearance="fill" floatLabel="never"> 
+  <mat-label>Filtrar</mat-label>
+  <input matInput (keyup)="applyFilter()" type="text" [(ngModel)]="searchKey" >
+  <button *ngIf="searchKey" matSuffix mat-icon-button aria-label="Limpiar" (click)="cleanFilter()" >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>   
+  </div>
+  <div id="action-buttons">
+    <app-return-button class="action-button"></app-return-button>
+</div> 
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="cedula_representante">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CEDULA_REPRESENTANTE"> Cédula </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TIPO_REPRESENTANTE + "-" + element.CEDULA_REPRESENTANTE }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="nombres_representante">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="NOMBRES_REPRESENTANTE"> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{ element.NOMBRES_REPRESENTANTE }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="direccion_representante">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="DIRECCION_REPRESENTANTE"> Dirección </th>
+      <td mat-cell *matCellDef="let element"> {{ element.DIRECCION_REPRESENTANTE }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="telefono_representante">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="TELEFONO_REPRESENTANTE"> Teléfono </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TELEFONO_REPRESENTANTE }} </td>
+    </ng-container>
+  
+     <ng-container matColumnDef="correo_representante">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CORREO_REPRESENTANTE"> Correo </th>
+      <td mat-cell *matCellDef="let element"> {{ element.CORREO_REPRESENTANTE }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="updateCustomer(row)"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteCustomer(row._id)"><mat-icon>delete_outline</mat-icon></button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[8,20,30,40, 10000]" [pageSize]="8" showFirstLastButtons=""></mat-paginator> 

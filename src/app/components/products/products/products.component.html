@@ -1,0 +1,79 @@
+<div id="principalBar" class="container-fluid d-flex justify-content-between">
+  <div class="d-flex">
+    <button mat-raised-button class="create-btn" (click)="openDialog()">
+    <mat-icon>add</mat-icon>Nuevo
+  </button>
+<mat-form-field class="search-form-field me-4" appearance="fill" floatLabel="never"> 
+  <mat-label>Filtrar</mat-label>
+  <input matInput (keyup)="applyFilter()" type="text" [(ngModel)]="searchKey" >
+  <button *ngIf="searchKey" matSuffix mat-icon-button aria-label="Limpiar" (click)="cleanFilter()" >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field> 
+  </div>
+  <div id="action-buttons">
+    <app-return-button class="action-button"></app-return-button>
+</div>
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="concepto_producto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CONCEPTO_PRODUCTO"> Concepto </th>
+      <td mat-cell *matCellDef="let element"> {{ element.CONCEPTO_PRODUCTO }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="precio_preescolar">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="PRECIO_PREESCOLAR"> Precio - Preescolar </th>
+      <td mat-cell *matCellDef="let element"> {{ element.PRECIO_PREESCOLAR | currency }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="precio_basica">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="PRECIO_BASICA"> Precio - Básica </th>
+      <td mat-cell *matCellDef="let element"> {{ element.PRECIO_BASICA | currency }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="tipo_producto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="TIPO_PRODUCTO"> Tipo de Producto </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TIPO_PRODUCTO }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="escenario_producto">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="ESCENARIO_PRODUCTO"> Escenario </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ESCENARIO_PRODUCTO }} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="pronto_pago_preescolar">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="PRONTO_PAGO_PREESCOLAR">PP Prees.</th>
+        <td mat-cell *matCellDef="let element"> {{ element.PRONTO_PAGO_PREESCOLAR | currency }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pago_vencido_preescolar">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_VENCIDO_PREESCOLAR"> Vencido Prees.</th>
+        <td mat-cell *matCellDef="let element"> {{ element.PAGO_VENCIDO_PREESCOLAR | currency }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pronto_pago_basica">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="PRONTO_PAGO_BASICA">PP Básica</th>
+        <td mat-cell *matCellDef="let element"> {{ element.PRONTO_PAGO_BASICA | currency }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pago_vencido_basica">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_VENCIDO_BASICA"> Vencido Básica</th>
+        <td mat-cell *matCellDef="let element"> {{ element.PAGO_VENCIDO_BASICA | currency }} </td>
+      </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="updateProduct(row)"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteProduct(row._id)"><mat-icon>delete_outline</mat-icon></button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[8,16,24,32,10000]" [pageSize]="8" showFirstLastButtons=""></mat-paginator> 

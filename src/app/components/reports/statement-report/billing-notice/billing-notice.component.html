@@ -1,0 +1,168 @@
+<div class="container-fluid d-flex justify-content-between" id="individualBar">
+    <div id="findCustomer" class="d-flex">
+        <div [formGroup]="customerForm" class="d-flex align-items-start">
+            <mat-form-field appearance="outline">
+                <mat-label>Id. Representante</mat-label>
+                <input matInput type="text" placeholder="Id del Representante" aria-label="Number"
+                    formControlName="ID_REPRESENTANTE" [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getOptionText">
+                    <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                        {{ customer.CEDULA_REPRESENTANTE + " - " + customer.NOMBRES_REPRESENTANTE }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <button type="button" mat-raised-button class="search-btn" (click)="getCustomerInfo()">
+                <mat-icon>search</mat-icon>Buscar
+            </button>
+
+            <mat-form-field appearance="outline" class="studentName ms-3">
+                <mat-label>Nombre del Alumno</mat-label>
+                <mat-select [(value)]="student" formControlName="NOMBRES_ALUMNO"> 
+                    <mat-option *ngFor="let student of students" [value]="student"> {{ student.NOMBRES_ALUMNO + " " +
+                        student.APELLIDOS_ALUMNO }} </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="">
+                <mat-label>Formato</mat-label>
+                <mat-select formControlName="FORMATO" [(value)]="format">
+                    <mat-option value="1">Aviso de Cobro</mat-option>
+                    <mat-option value="2">Solvencia administrativa</mat-option>
+                    <mat-option value="3">Constancia de Inscripción</mat-option>
+                    <mat-option value="4">Constancia de Estudios</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div id="action-buttons">
+        <button mat-raised-button color="warn" class="action-btn" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>REGRESAR
+        </button>
+        <app-print-report-button class="action-button"></app-print-report-button>
+    </div>
+</div>
+
+<div *ngIf="student && this.format" id="collectFormat" class="">
+    <div id="avisoCobro" *ngIf="student.DEUDA_TOTAL > 0 && this.format == 1">
+        <img class="logo-img" src="../../../assets/mericilogo.png" alt="">
+    <br>
+    <br>
+    <p class="text-center"> <b>AVISO DE COBRO</b></p>
+        <p> Estimado representante, reciba un cordial saludo mericista.  </p>
+
+        <p> Le enviamos este mensaje a los fines  de informarle  sobre  su  estado  de cuenta  ante  la  Administración  de  la  Institución:</p>
+        <ul>
+            <li *ngIf="customer"> <u>REPRESENTANTE:</u>  <span> {{ customer.NOMBRES_REPRESENTANTE }} </span></li>
+            <li *ngIf="customer"> <u>CÉDULA:</u>  <span> {{ customer.TIPO_REPRESENTANTE + "-" + customer.CEDULA_REPRESENTANTE }} </span></li>
+            <li *ngIf="student"> <u>ALUMNO:</u>  <span> {{ student.NOMBRES_ALUMNO + " " + student.APELLIDOS_ALUMNO }} </span> </li>
+            <li *ngIf="student"> <u>GRADO:</u>  <span> {{ student.GRADO_ALUMNO }} </span> </li>
+            <li *ngIf="student"> <u>DEUDA:</u>  <span> {{ student.DEUDA_TOTAL | currency }} </span> </li>
+            <li *ngIf="student"> <u>TOTAL:</u>  <span> {{ student.CONCEPTO_DEUDA }} </span> </li>
+        </ul>
+        <p> Su apoyo y puntualidad con el pago de las mensualidades pendientes es necesario para garantizar la continuidad de nuestra vocación educativa. Si  por  cualquier caso la información referente a su adeudamiento no fuese del todo precisa, agradecemos  que nos haga  llegar las  correcciones  pertinentes,  siendo  imprescindible  la  consignación  del  soporte  de  pago.</p>
+        
+        <p> A continuación le anexamos la información para transferencias y depósitos:</p>
+        <ul>
+            <li> <u>BANCO PROVINCIAL:</u> CTA CORRIENTE: 0108-0300-41-0100015685		</li>
+            <li> <u>BANESCO: CTA CORRIENTE:</u> 0134-0449-65-4493009899 	</li>
+            <li> <u>RAZÓN SOCIAL:</u> INSTITUTO INTEGRAL DE EDUCACIÓN INFANTIL VILLA MÉRICI, C.A. 	</li>
+            <li> <u>RIF:</u> J-30483905-7. 	</li>
+        </ul>
+                <br>	
+                <br>			
+        <p class="text-center">Atentamente,
+        <br>
+        La Administración.</p>
+        <br>
+        <div>
+            <br>
+            <p class="footer-text text-center">INSTITUTO VILLA MÉRICI, CALLE 64, URB.  SUCRE,  EDIFICIO VILLA “MÉRICI” TELF: 0424-6114517 RIF.: J-304839057   e-mail:  admvillamerici@gmail.com  
+        Maracaibo- Venezuela</p>
+        </div>
+    </div>
+    <div id="avisoCobroNo" *ngIf="student.DEUDA_TOTAL <= 0 && this.format == 1">
+        <br>
+        El(la) alumno(a): {{ student.NOMBRES_ALUMNO + " " + student.APELLIDOS_ALUMNO }} se encuentra solvente con la Institución. Puedes generar una carta de solvencia escogiendo la opción "Solvencia admnistrativa".
+    </div>
+    <div id="solvencia" *ngIf="student.DEUDA_TOTAL <= 0 && this.format == 2">
+        <img class="logo-img" src="../../../assets/mericilogo.png" alt="">
+    <br>
+    <br>
+    <p class="text-center"> <b>CONSTANCIA DE SOLVENCIA</b></p>
+    <br>
+        <p>Quien suscribe, Yamaris Zambrano, titular de la C.I. V- 7.970.693, Administradora del Instituto Integral de Educación Infantil Villa Mérici, por medio de la presente hace constar que {{ customer.NOMBRES_REPRESENTANTE }}, con cédula de identidad {{ customer.TIPO_REPRESENTANTE + "-" + customer.CEDULA_REPRESENTANTE }}, representante del(a) alumno(a) {{ student.NOMBRES_ALUMNO + " " + student.APELLIDOS_ALUMNO }}, cursante de {{ student.GRADO_ALUMNO }}, en el año escolar 2021-2022, ha cumplido con sus compromisos de pago con esta Institución satisfactoriamente y ha cancelado las mensualidades hasta el {{ student.MES_DE_ULTIMO_PAGO }} </p>
+
+        <p>Constancia que se expide en la ciudad de Maracaibo <span *ngIf="today.getDate() == 1">al</span> <span *ngIf="today.getDate() > 1">a los</span> {{ today.getDate() }} día(s) del mes de {{ month }} de {{ year }}.
+        </p>
+                <br>
+                <br>
+                <br>	
+                <br>					
+                <br>
+        <p class="text-center">Atentamente,
+        <br>
+        La Administración.</p>
+        <br>
+        <div>
+            <br>
+            <p class="footer-text text-center">INSTITUTO VILLA MÉRICI, CALLE 64, URB.  SUCRE,  EDIFICIO VILLA “MÉRICI” TELF: 0424-6114517 RIF.: J-304839057   e-mail:  admvillamerici@gmail.com  
+        Maracaibo- Venezuela</p>
+        </div>
+    </div>
+    <div id="noSolvencia" *ngIf="this.format == 2">
+        El(la) alumno(a): {{ student.NOMBRES_ALUMNO + " " + student.APELLIDOS_ALUMNO }} NO se encuentra solvente con la Institución. Puedes generar una carta de cobranza escogiendo la opción "Aviso de Cobro".
+    </div>
+    <div id="inscripcion" *ngIf="this.format == 3">
+        <img class="logo-img" src="../../../assets/mericilogo.png" alt="">
+    <br>
+    <br>
+        <p class="text-center"> <b>CONSTANCIA DE INSCRIPCIÓN</b></p>
+    <br>
+        <p>Quien suscribe, Yamaris Zambrano, titular de la C.I. V- 7.970.693, Administradora del Instituto Integral de Educación Infantil Villa Mérici, por medio de la presente hace constar que el(la) alumno(a) {{ student.NOMBRES_ALUMNO + " " + student.APELLIDOS_ALUMNO }}, ha sido válidamene inscrito(a) en el Instituto Villa Mérici, por su representante: {{ customer.NOMBRES_REPRESENTANTE }}, con cédula de identidad {{ customer.TIPO_REPRESENTANTE + "-" + customer.CEDULA_REPRESENTANTE }}, para cursar {{ student.GRADO_ALUMNO }}, en el presente año escolar 2021-2022.</p>
+
+        <p>Constancia que se expide en la ciudad de Maracaibo <span *ngIf="today.getDate() == 1">al</span> <span *ngIf="today.getDate() > 1">a los</span> {{ today.getDate() }} día(s) del mes de {{ month }} de {{ year }}.
+        </p>
+                <br>
+                <br>		
+                <br>	
+                <br>	
+                <br>		
+        <p class="text-center">Atentamente,
+        <br>
+        La Administración.</p>
+        <br>
+        <div>
+            <br>
+            <p class="footer-text text-center">INSTITUTO VILLA MÉRICI, CALLE 64, URB.  SUCRE,  EDIFICIO VILLA “MÉRICI” TELF: 0424-6114517 RIF.: J-304839057   e-mail:  admvillamerici@gmail.com  
+        Maracaibo- Venezuela</p>
+    </div>
+    </div>
+    <div id="estudios" *ngIf="this.format == 4">
+        <img class="logo-img" src="../../../assets/mericilogo.png" alt="">
+    <br>
+    <br>
+        <p class="text-center"> <b>CONSTANCIA DE INSCRIPCIÓN</b></p>
+    <br>
+        <p>Quien suscribe, Yamaris Zambrano, titular de la C.I. V- 7.970.693, Administradora del Instituto Integral de Educación Infantil Villa Mérici, por medio de la presente hace constar que el(la) alumno(a) {{ student.NOMBRES_ALUMNO + " " + student.APELLIDOS_ALUMNO }}, representado por: {{ customer.NOMBRES_REPRESENTANTE }}, con cédula de identidad {{ customer.TIPO_REPRESENTANTE + "-" + customer.CEDULA_REPRESENTANTE }}, se encuentra cursando o ha cursado estudios en el Instituto Villa Mérici, en {{ student.GRADO_ALUMNO }}, durante el año escolar 2021-2022. </p>
+
+        <p>Constancia que se expide en la ciudad de Maracaibo <span *ngIf="today.getDate() == 1">al</span> <span *ngIf="today.getDate() > 1">a los</span> {{ today.getDate() }} día(s) del mes de {{ month }} de {{ year }}.
+        </p>
+                <br>
+                <br>		
+                <br>	
+                <br>	
+                <br>		
+        <p class="text-center">Atentamente,
+        <br>
+        La Administración.</p>
+        <br>
+        <div>
+            <br>
+            <p class="footer-text text-center">INSTITUTO VILLA MÉRICI, CALLE 64, URB.  SUCRE,  EDIFICIO VILLA “MÉRICI” TELF: 0424-6114517 RIF.: J-304839057   e-mail:  admvillamerici@gmail.com  
+        Maracaibo- Venezuela</p>
+        
+    </div>
+</div>
+
+<button #print printTitle="" printSectionId="collectFormat" [useExistingCss]="true" ngxPrint hidden="true">Imprimir</button>

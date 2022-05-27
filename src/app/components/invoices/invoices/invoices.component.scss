@@ -1,0 +1,94 @@
+#principalBar {
+  margin-top: 2px;
+  margin-bottom: 1px;
+}
+
+button {
+  height: 50px;
+  margin-top: 0.3em !important;
+}
+
+mat-form-field {
+  width: 200px;
+  margin-top: 0.3em !important;
+}
+
+#action-buttons button,
+.action-button {
+  margin-top: 0.3em !important;
+  height: 50px;
+  margin-left: 20px;
+}
+
+#action-buttons {
+    margin-top: 2px;
+}
+
+//tabla
+table {
+  width: 100%;
+}
+
+//expanded css
+
+.expandedColumn {
+  overflow: hidden;
+  display: flex;
+}
+
+.expanded-box {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 15px;
+  width: 14.28%;
+}
+
+//table format
+
+.hide-section {
+  display: none !important;
+}
+
+.hide-rows {
+  display: none !important;
+}
+
+#generales-col,
+#cliente-col,
+#alumno-col,
+#valor-col,
+#datos-col,
+#otros-col {
+  width: 14%;
+}
+
+#conceptos-col {
+  width: 16%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.canceledInvoice {
+  background-color: rgb(216, 216, 216) !important;
+}
+
+@page {
+  size: auto;
+  margin-top: 35mm;
+}
+
+@media print {
+  .actionsCol {
+      display: none;
+  }
+}

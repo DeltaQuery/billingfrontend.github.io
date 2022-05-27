@@ -1,0 +1,23 @@
+<form [formGroup]="loginForm" class="d-flex" (ngSubmit)="onSubmit(loginForm.value)">
+    <div class="d-flex flex-column align-self-center" id="form-content">
+  <img class="mb-4 logo-img" src="../../../assets/mericilogo.png" alt="">
+        <h1>Inicia sesión</h1>
+            <mat-form-field appearance="outline" class="">
+                <mat-label>Usuario</mat-label>
+                <input formControlName="user" matInput placeholder="Usuario">
+              </mat-form-field>
+            <mat-form-field appearance="outline" class="">
+                <mat-label>Contraseña</mat-label>
+                <input type="password" formControlName="password" matInput placeholder="Contraseña">
+            </mat-form-field>
+            <div *ngIf="showErrorMessage">
+              <p style="color: red;">Usuario o contraseña inválido. Por favor intenta de nuevo.</p>
+            </div>
+            <button mat-raised-button color="primary" type="submit">Inicia sesión</button>
+            <p class="text-muted mt-3">© 2022</p>
+    </div>
+  </form>
+      
+  
+        
+      

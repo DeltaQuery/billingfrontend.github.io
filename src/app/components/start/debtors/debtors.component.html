@@ -1,0 +1,67 @@
+<div id="container">
+    <h1><mat-icon>warning</mat-icon> Mayores Deudores</h1>
+    <hr>
+    <table class="table table-sm table-hover" *ngIf="debtors">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Deuda</th>
+            <th scope="col">Alumno</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="debtors[0]">
+            <th scope="row">1</th>
+            <td> {{ debtors[0].DEUDA_TOTAL | currency }} </td>
+            <td> {{ debtors[0].NOMBRES_ALUMNO + " " + debtors[0].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[1]">
+            <th scope="row">2</th>
+            <td> {{ debtors[1].DEUDA_TOTAL | currency}}</td>
+            <td> {{ debtors[1].NOMBRES_ALUMNO + " " + debtors[1].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[2]">
+            <th scope="row">3</th>
+            <td> {{ debtors[2].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[2].NOMBRES_ALUMNO + " " + debtors[2].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[3]">
+            <th scope="row">4</th>
+            <td> {{ debtors[3].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[3].NOMBRES_ALUMNO + " " + debtors[3].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[4]">
+            <th scope="row">5</th>
+            <td> {{ debtors[4].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[4].NOMBRES_ALUMNO + " " + debtors[4].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[5]">
+            <th scope="row">6</th>
+            <td> {{ debtors[5].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[5].NOMBRES_ALUMNO + " " + debtors[5].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[6]">
+            <th scope="row">7</th>
+            <td> {{ debtors[6].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[6].NOMBRES_ALUMNO + " " + debtors[6].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[7]">
+            <th scope="row">8</th>
+            <td> {{ debtors[7].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[7].NOMBRES_ALUMNO + " " + debtors[7].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[8]">
+            <th scope="row">9</th>
+            <td> {{ debtors[8].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[8].NOMBRES_ALUMNO + " " + debtors[8].APELLIDOS_ALUMNO }} </td>
+          </tr>
+          <tr *ngIf="debtors[9]">
+            <th scope="row">10</th>
+            <td> {{ debtors[9].DEUDA_TOTAL | currency }}</td>
+            <td> {{ debtors[9].NOMBRES_ALUMNO + " " + debtors[9].APELLIDOS_ALUMNO }} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    

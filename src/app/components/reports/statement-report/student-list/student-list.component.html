@@ -1,0 +1,414 @@
+
+<app-billing-notice #collectBar id="collectBar" class="hide-section"></app-billing-notice>
+
+<app-solvency-report #solvencyBar id="solvencyBar" class="hide-section"></app-solvency-report>
+
+
+<div id="principalBar" class="container-fluid d-flex justify-content-between">
+  <div class="d-flex">
+<mat-form-field class="search-form-field me-4" appearance="outline" floatLabel="never">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter()" type="text" [(ngModel)]="searchKey" />
+    <button *ngIf="searchKey" matSuffix mat-icon-button aria-label="Limpiar" (click)="cleanFilter()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <div [formGroup]="scenarioForm">
+    <div mat-dialog-content class="scenario">
+      <mat-form-field class="scenario-field" appearance="outline">
+        <mat-label>Escenario</mat-label>
+        <mat-select [(value)]="escenario" formControlName="SELECT_SCENARIO">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="5">5</mat-option>
+          <mat-option value="6">6</mat-option>
+          <mat-option value="7">7</mat-option>
+          <mat-option value="8">8</mat-option>
+          <mat-option value="9">9</mat-option>
+          <mat-option value="10">10</mat-option>
+          <mat-option value="11">11</mat-option>
+          <mat-option value="12">12</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button type="button" mat-raised-button class="create-btn" (click)="updateScenario()">
+        <mat-icon>search</mat-icon>Actualizar
+      </button>
+    </div>
+  </div>
+  </div>
+  
+  <div class="action-buttons">
+    <button type="button" mat-raised-button class="action-button" (click)="solvencyButton()">
+      <mat-icon>bar_chart</mat-icon>Corte
+    </button>
+    <button type="button" mat-raised-button class="action-button" (click)="collectButton()">
+      <mat-icon>subject</mat-icon>Cobro y constancias
+    </button>
+    <app-return-button class="action-button"></app-return-button>
+    <button type="button" color="primary" mat-raised-button class="action-button" (click)="exportExcel()">
+      <mat-icon>print</mat-icon> IMPRIMIR
+    </button>
+  </div>
+</div>
+
+<div id="print-section">
+  <table id="table-section" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="select" [sticky] = "sticky"  >
+      <th class ="no-print-row" mat-header-cell *matHeaderCellDef>
+      </th>
+      <td class ="no-print-row" mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DEUDA_TOTAL" [sticky] = "sticky" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="DEUDA_TOTAL">
+        Deuda
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.DEUDA_TOTAL | currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="GRADO_ALUMNO" [sticky] = "sticky" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="GRADO_ALUMNO">
+        Grado
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.GRADO_ALUMNO }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="NOMBRES_ALUMNO" [sticky] = "sticky" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="NOMBRES_ALUMNO">
+        Alumno
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.NOMBRES_ALUMNO + " " + element.APELLIDOS_ALUMNO }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="NOMBRES_REPRESENTANTE">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="NOMBRES_REPRESENTANTE">
+        Representante
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.NOMBRES_REPRESENTANTE }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CEDULA_REPRESENTANTE">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CEDULA_REPRESENTANTE">
+        Cédula
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.TIPO_REPRESENTANTE + "-" + element.CEDULA_REPRESENTANTE }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CORREO_REPRESENTANTE">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CORREO_REPRESENTANTE">
+        Correo
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.CORREO_REPRESENTANTE }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TELEFONO_REPRESENTANTE">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="TELEFONO_REPRESENTANTE">
+        Teléfono
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.TELEFONO_REPRESENTANTE }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DIRECCION_REPRESENTANTE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="DIRECCION_REPRESENTANTE">
+        Dirección
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.DIRECCION_REPRESENTANTE }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_INSCRIPCION">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_INSCRIPCION">
+        Inscripción
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_INSCRIPCION !== 0">{{ element.PAGO_INSCRIPCION | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_INSCRIPCION">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_INSCRIPCION">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.FECHA_INSCRIPCION">{{ element.FECHA_INSCRIPCION | date: "dd-MM-yy" }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_SEPTIEMBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_SEPTIEMBRE">
+        Septiembre
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_SEPTIEMBRE !== 0">{{ element.PAGO_SEPTIEMBRE | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_SEPTIEMBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_SEPTIEMBRE">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_SEPTIEMBRE | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_OCTUBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_OCTUBRE">
+        Octubre
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_OCTUBRE !== 0">{{ element.PAGO_OCTUBRE | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_OCTUBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_OCTUBRE">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_OCTUBRE | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_NOVIEMBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_NOVIEMBRE">
+        Noviembre
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_NOVIEMBRE !== 0">{{ element.PAGO_NOVIEMBRE | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_NOVIEMBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_NOVIEMBRE">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_NOVIEMBRE | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_DICIEMBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_DICIEMBRE">
+        Diciembre
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_DICIEMBRE !== 0">{{ element.PAGO_DICIEMBRE | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_DICIEMBRE">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_DICIEMBRE">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_DICIEMBRE | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_ENERO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_ENERO">
+        Enero
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_ENERO !== 0">{{ element.PAGO_ENERO | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_ENERO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_ENERO">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_ENERO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_FEBRERO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_FEBRERO">
+        Febrero
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_FEBRERO !== 0">{{ element.PAGO_FEBRERO | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_FEBRERO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_FEBRERO">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_FEBRERO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_MARZO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_MARZO">
+        Marzo
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_MARZO !== 0">{{ element.PAGO_MARZO | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_MARZO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_MARZO">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_MARZO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_ABRIL">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_ABRIL">
+        Abril
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_ABRIL !== 0">{{ element.PAGO_ABRIL | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_ABRIL">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_ABRIL">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_ABRIL | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_MAYO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_MAYO">
+        Mayo
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_MAYO !== 0">{{ element.PAGO_MAYO | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_MAYO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_MAYO">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_MAYO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_JUNIO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_JUNIO">
+        Junio
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_JUNIO !== 0">{{ element.PAGO_JUNIO | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_JUNIO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_JUNIO">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_JUNIO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_JULIO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_JULIO">
+        Julio
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_JULIO !== 0">{{ element.PAGO_JULIO | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_JULIO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_JULIO">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_JULIO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PAGO_AGOSTO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="PAGO_AGOSTO">
+        Agosto
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.PAGO_AGOSTO !== 0">{{ element.PAGO_AGOSTO | currency }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_AGOSTO">
+      <th class="secondaryCol" mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_AGOSTO">
+        Fecha
+      </th>
+      <td class="secondaryCol" mat-cell *matCellDef="let element">
+        {{ element.FECHA_AGOSTO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ESTATUS">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="ESTATUS">
+        Estatus
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.ESTATUS | estatusPipe }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th class ="no-print-row" mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <td class ="no-print-row" mat-cell *matCellDef="let row">
+        <button mat-icon-button>
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+</div>
+<mat-paginator [pageSizeOptions]="[8, 20, 30, 40, 10000]" [pageSize]="8" showFirstLastButtons=""></mat-paginator>
+<button #print printTitle="" printSectionId="print-section" [useExistingCss]="true" ngxPrint hidden="true">Imprimir</button>

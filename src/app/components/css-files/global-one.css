@@ -1,0 +1,30 @@
+#principalBar {
+    margin-top: 2px;
+    margin-bottom: 1px;
+  }
+  
+  button {
+    height: 50px;
+    margin-top: 0.3em !important;
+  }
+  
+  mat-form-field {
+    width: 200px;
+    margin-top: 0.3em !important;
+  }
+  
+  #action-buttons button,
+  .action-button {
+    margin-top: 0.3em !important;
+    height: 50px;
+    margin-left: 20px;
+  }
+  
+  #action-buttons {
+      margin-top: 4px;
+  }
+  
+  table {
+      width: 100%;
+    }
+

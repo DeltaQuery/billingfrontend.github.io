@@ -1,0 +1,65 @@
+    <div id="principalBar" class="container-fluid d-flex justify-content-between">
+      <div class="d-flex">
+ <button mat-raised-button class="create-btn" (click)="openDialog()">
+    <mat-icon>add</mat-icon>Nuevo
+  </button>
+<mat-form-field class="search-form-field me-4" appearance="fill" floatLabel="never"> 
+  <mat-label>Filtrar</mat-label>
+  <input matInput (keyup)="applyFilter()" type="text" [(ngModel)]="searchKey" >
+  <button *ngIf="searchKey" matSuffix mat-icon-button aria-label="Limpiar" (click)="cleanFilter()" >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field> 
+      </div>
+      <div id="action-buttons">
+        <app-return-button class="action-button"></app-return-button>
+    </div>
+ 
+    </div>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="grado_alumno">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="GRADO_ALUMNO"> Grado </th>
+      <td mat-cell *matCellDef="let element"> {{ element.GRADO_ALUMNO }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="nombres_alumno">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="NOMBRES_ALUMNO"> Nombres </th>
+      <td mat-cell *matCellDef="let element"> {{ element.NOMBRES_ALUMNO }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="apellidos_alumno">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="APELLIDOS_ALUMNO"> Apellidos </th>
+      <td mat-cell *matCellDef="let element"> {{ element.APELLIDOS_ALUMNO }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="cedula_representante">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CEDULA_REPRESENTANTE"> Cédula de Representante </th>
+      <td mat-cell *matCellDef="let element"> {{ element.TIPO_REPRESENTANTE + "-" + element.CEDULA_REPRESENTANTE }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombres_representante">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="NOMBRES_REPRESENTANTE"> Nombre de Representante </th>
+      <td mat-cell *matCellDef="let element"> {{ element.NOMBRES_REPRESENTANTE }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ESTATUS">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="ESTATUS">Estatus </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ESTATUS | estatusPipe }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="updateStudent(row)"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteStudent(row._id)"><mat-icon>delete_outline</mat-icon></button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[8,20,30,40, 10000]" [pageSize]="8" showFirstLastButtons=""></mat-paginator> 

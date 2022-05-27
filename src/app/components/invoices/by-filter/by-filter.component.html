@@ -1,0 +1,60 @@
+<div class="container-fluid d-flex justify-content-between">
+    <div class="d-flex">
+        <div id="byFilter" [formGroup]="invoiceForm">
+            <mat-form-field appearance="outline" class="">
+                <mat-label>Filtro</mat-label>
+                <mat-select #filtro formControlName="FILTRO">
+                    <mat-option value="1">Grado</mat-option>
+                    <mat-option value="2">Modalidad</mat-option>
+                    <mat-option value="3">Efectivo</mat-option>
+                    <mat-option value="4">Estatus</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="filtro.value == 1" appearance="outline" class="">
+                <mat-label>Grado</mat-label>
+                <mat-select #grado formControlName="GRADO">
+                    <mat-option value="Sala de 3">Sala de 3</mat-option>
+              <mat-option value="Sala de 4">Sala de 4</mat-option>
+              <mat-option value="Sala de 5">Sala de 5</mat-option>
+              <mat-option value="1er Grado">1er Grado</mat-option>
+              <mat-option value="2do Grado">2do Grado</mat-option>
+              <mat-option value="3er Grado">3er Grado</mat-option>
+              <mat-option value="4to Grado">4to Grado</mat-option>
+              <mat-option value="5to Grado">5to Grado</mat-option>
+              <mat-option value="6to Grado">6to Grado</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="filtro.value == 2" appearance="outline" class="">
+                <mat-label>Modalidad</mat-label>
+                <mat-select #modalidad formControlName="CREDITO_CONTADO">
+                    <mat-option value="Contado">Contado</mat-option>
+              <mat-option value="Credito">Crédito</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="filtro.value == 3" appearance="outline" class="">
+                <mat-label>Efectivo</mat-label>
+                <mat-select #efectivo formControlName="EFECTIVO">
+                    <mat-option value="1">Pago en efectivo</mat-option>
+              <mat-option value="2">Sin efectivo</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="filtro.value == 4" appearance="outline" class="">
+                <mat-label>Estatus</mat-label>
+                <mat-select #estatus formControlName="ESTATUS">
+                    <mat-option value="1">Vigente</mat-option>
+              <mat-option value="0">Anulada</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button (click)="filterFilterInvoices()" class="search-btn">
+            <mat-icon>search</mat-icon>Buscar
+        </button>
+    </div>
+
+    <div id="action-buttons">
+        <button mat-raised-button color="warn" class="action-btn" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>REGRESAR
+          </button>
+        <app-print-invoice-button class="action-button"></app-print-invoice-button>
+    </div>
+</div>

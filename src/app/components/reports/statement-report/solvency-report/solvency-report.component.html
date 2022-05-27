@@ -1,0 +1,30 @@
+<div class="container-fluid d-flex justify-content-between" id="solvencyBar">
+    <div [formGroup]="filterForm" id="findCustomer" class="d-flex">
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Filtro</mat-label>
+            <mat-select formControlName="FILTRO">
+                <mat-option value="1">Todos</mat-option>
+                <mat-option value="2">Solventes</mat-option>
+                <mat-option value="3">Insolventes</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Grado</mat-label>
+            <mat-select formControlName="GRADO" multiple [(value)]="grade">
+              <mat-option *ngFor="let grado of gradeList" [value]="grado">{{ grado.grade }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button type="button" mat-raised-button class="search-btn" (click)="filterData()">
+            <mat-icon>search</mat-icon>Filtrar
+        </button>
+    </div>
+
+    <div id="action-buttons">
+        <button mat-raised-button color="warn" class="action-btn" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>REGRESAR
+        </button>
+        <app-print-report-button class="action-button"></app-print-report-button>
+    </div>
+</div>
+
+<button #print printTitle="" printSectionId="print-section" [useExistingCss]="true" ngxPrint hidden="true">Imprimir</button>

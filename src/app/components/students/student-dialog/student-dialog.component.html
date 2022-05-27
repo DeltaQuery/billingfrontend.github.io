@@ -1,0 +1,139 @@
+<h1 mat-dialog-title> {{ dialogTitle }} </h1>
+<hr>
+<form [formGroup]="studentForm">
+    <div mat-dialog-content>
+        <h2>Información del Alumno</h2>
+        <div class="d-flex">
+            <mat-form-field appearance="outline" class="typeField">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="TIPO_ALUMNO" [(value)]="id_type">
+                  <mat-option value="V">V-</mat-option>
+                  <mat-option value="E">E-</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="outline" class="idField">
+                <mat-label>Cédula escolar</mat-label>
+                <input formControlName="CEDULA_ALUMNO" matInput placeholder="Cédula de identidad">
+            </mat-form-field>
+        </div>
+        <div>
+        <mat-form-field appearance="outline" class="nameField">
+            <mat-label>Nombres</mat-label>
+            <input formControlName="NOMBRES_ALUMNO" matInput placeholder="Nombres">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="nameField">
+            <mat-label>Apellidos</mat-label>
+            <input formControlName="APELLIDOS_ALUMNO" matInput placeholder="Apellidos">
+        </mat-form-field>  
+        <mat-form-field appearance="outline" class="gradeField">
+          <mat-label>Grado</mat-label>
+          <mat-select formControlName="GRADO_ALUMNO">
+            <mat-option value="Sala de 3">Sala de 3</mat-option>
+            <mat-option value="Sala de 4">Sala de 4</mat-option>
+            <mat-option value="Sala de 5">Sala de 5</mat-option>
+            <mat-option value="1er Grado">1er Grado</mat-option>
+            <mat-option value="2do Grado">2do Grado</mat-option>
+            <mat-option value="3er Grado">3er Grado</mat-option>
+            <mat-option value="4to Grado">4to Grado</mat-option>
+            <mat-option value="5to Grado">5to Grado</mat-option>
+            <mat-option value="6to Grado">6to Grado</mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="discountsField">
+            <mat-label>Beca</mat-label>
+            <mat-select formControlName="BECA_ALUMNO">
+              <mat-option value="0">No</mat-option>
+              <mat-option value="1">Sí</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="discountsField">
+            <mat-label>Descuento</mat-label>
+            <input type="number" formControlName="DESC_ALUMNO" matInput placeholder="Descuento expresado del 0.0 al 0.99">
+        </mat-form-field>  
+        </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Id. Representante</mat-label>
+            <input matInput
+                
+                type="text"
+                placeholder="Id del Representante"
+                aria-label="Number"
+                formControlName = "CEDULA_REPRESENTANTE"
+                [matAutocomplete]="auto">
+    
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getOptionText">
+                <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                    {{ customer.CEDULA_REPRESENTANTE + " - " + customer.NOMBRES_REPRESENTANTE }}
+                  </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>
+
+          <mat-form-field appearance="outline" class="shortField">
+            <mat-label>Inicio de Cobro</mat-label>
+            <mat-select formControlName="INICIO_COBRO">
+              <mat-option value="1">Septiembre</mat-option>
+                <mat-option value="2">Octubre</mat-option>
+                <mat-option value="3">Noviembre</mat-option>
+                <mat-option value="4">Diciembre</mat-option>
+                <mat-option value="5">Enero</mat-option>
+                <mat-option value="6">Febrero</mat-option>
+                <mat-option value="7">Marzo</mat-option>
+                <mat-option value="8">Abril</mat-option>
+                <mat-option value="9">Mayo</mat-option>
+                <mat-option value="10">Junio</mat-option>
+                <mat-option value="11">Julio</mat-option>
+                <mat-option value="12">Agosto</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="shortField">
+            <mat-label>Fin de Cobro</mat-label>
+            <mat-select formControlName="FINAL_COBRO">
+              <mat-option value="1">Septiembre</mat-option>
+              <mat-option value="2">Octubre</mat-option>
+              <mat-option value="3">Noviembre</mat-option>
+              <mat-option value="4">Diciembre</mat-option>
+              <mat-option value="5">Enero</mat-option>
+              <mat-option value="6">Febrero</mat-option>
+              <mat-option value="7">Marzo</mat-option>
+              <mat-option value="8">Abril</mat-option>
+              <mat-option value="9">Mayo</mat-option>
+              <mat-option value="10">Junio</mat-option>
+              <mat-option value="11">Julio</mat-option>
+              <mat-option value="12">Agosto</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="shortField">
+            <mat-label>Estatus</mat-label>
+            <mat-select [(value)]="estatus" formControlName="ESTATUS">
+              <mat-option value="0">Activo</mat-option>
+              <mat-option value="1">Retirado</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="estatus == '1'" appearance="outline" class="shortField">
+            <mat-label>Fecha de Retiro</mat-label>
+            <mat-select formControlName="FECHA_RETIRO">
+                <mat-option value="1">Septiembre</mat-option>
+                <mat-option value="2">Octubre</mat-option>
+                <mat-option value="3">Noviembre</mat-option>
+                <mat-option value="4">Diciembre</mat-option>
+                <mat-option value="5">Enero</mat-option>
+                <mat-option value="6">Febrero</mat-option>
+                <mat-option value="7">Marzo</mat-option>
+                <mat-option value="8">Abril</mat-option>
+                <mat-option value="9">Mayo</mat-option>
+                <mat-option value="10">Junio</mat-option>
+                <mat-option value="11">Julio</mat-option>
+                <mat-option value="12">Agosto</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+    </div>
+</form>
+    <div  class="mt-2"  mat-dialog-action [align]="'end'">
+    <button class="me-2" mat-raised-button color="warn" mat-dialog-close><mat-icon>close</mat-icon> Cerrar</button>
+    <button class="" mat-raised-button color="primary" [disabled]="!studentForm.valid" (click)="addStudent()"><mat-icon>save</mat-icon> {{ actionBtn }} </button>
+    </div>

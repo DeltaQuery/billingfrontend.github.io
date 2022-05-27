@@ -1,0 +1,208 @@
+
+<body>
+<h1 mat-dialog-title>{{ dialogTitle }}</h1>
+
+<div id="view-format">
+  <div id="top" class="d-flex justify-content-between">
+    <div id="left-top" class="invoice-minibox">
+      <div>
+        <b>FECHA:</b>
+        {{
+          this.invoiceForm.controls["FECHA_REGISTRO"].value | date: "dd-MM-yy"
+        }}
+      </div>
+      <div>
+        <b>CIUDAD:</b> {{ this.invoiceForm.controls["CIUDAD_CLIENTE"].value }}
+      </div>
+      <div>
+        <b>MODALIDAD:</b>
+        {{ this.invoiceForm.controls["CREDITO_CONTADO"].value }}
+      </div>
+    </div>
+    <div id="right-top" class="invoice-minibox">
+      <div class="d-flex flex-row justify-content-between">
+        <div class="customer-name">
+          <b>CLIENTE:</b>
+          {{ this.invoiceForm.controls["NOMBRES_CLIENTE"].value }}
+        </div>
+        <div class="customer-id">
+          <b>CI:</b>
+          {{
+              this.invoiceForm.controls["ID_CLIENTE"].value
+          }}
+        </div>
+      </div>
+      <div class="d-flex flex-row justify-content-between dir-plus-telf">
+        <div class="customer-address">
+          <b>DIR:</b>
+          {{ this.invoiceForm.controls["DIRECCION_CLIENTE"].value }}
+        </div>
+        <div class="customer-telf">
+          <b>TELF:</b>
+          {{ this.invoiceForm.controls["TELEFONO_CLIENTE"].value }}
+        </div>
+      </div>
+      <div class="d-flex flex-row justify-content-between">
+        <div class="student-name">
+          <b>ALUMNO:</b>
+          {{
+            this.invoiceForm.controls["NOMBRES_ALUMNO"].value +
+              " " +
+              this.invoiceForm.controls["APELLIDOS_ALUMNO"].value
+          }}
+        </div>
+        <div>
+          <b>GRADO:</b> {{ this.invoiceForm.controls["GRADO_ALUMNO"].value }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="middle" class="invoice-minibox">
+    <div class="d-flex flex-row product-row justify-content-between">
+      <div class="product-concept"></div>
+      <div class="product-bs"><b>BOLÍVARES</b></div>
+      <div class="product-usd hide"><b>USD</b></div>
+      <div class="product-bcv hide"><b>BCV</b></div>
+    </div>
+    <div class="d-flex flex-row product-row justify-content-between">
+      <div class="product-concept">
+        {{ this.invoiceForm.controls["CONCEPTO_1"].value }}
+      </div>
+      <div class="product-bs">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_1_BS"].value }}
+      </div>
+      <div class="product-usd hide">
+        {{ "$" + this.invoiceForm.controls["MONTO_1_USD"].value }}
+      </div>
+      <div class="product-bcv hide">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_1_BCV"].value }}
+      </div>
+    </div>
+    <div class="d-flex flex-row product-row justify-content-between">
+      <div class="product-concept">
+        {{ this.invoiceForm.controls["CONCEPTO_2"].value }}
+      </div>
+      <div class="product-bs" [ngClass]="this.invoiceForm.controls['MONTO_2_BS'].value > 0 ? '' : 'ngTransp hide'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_2_BS"].value }}
+      </div>
+      <div class="product-usd hide" [ngClass]="this.invoiceForm.controls['MONTO_2_USD'].value > 0 ? '' : 'ngTransp'">
+        {{ "$" + this.invoiceForm.controls["MONTO_2_USD"].value }}
+      </div>
+      <div class="product-bcv hide" [ngClass]="this.invoiceForm.controls['MONTO_2_BCV'].value > 0 ? '' : 'ngTransp'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_2_BCV"].value }}
+      </div>
+    </div>
+    <div class="d-flex flex-row product-row justify-content-between">
+      <div class="product-concept">
+        {{ this.invoiceForm.controls["CONCEPTO_3"].value }}
+      </div>
+      <div class="product-bs" [ngClass]="this.invoiceForm.controls['MONTO_3_BS'].value > 0 ? '' : 'ngTransp hide'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_3_BS"].value }}
+      </div>
+      <div class="product-usd hide" [ngClass]="this.invoiceForm.controls['MONTO_3_USD'].value > 0 ? '' : 'ngTransp'">
+        {{ "$" + this.invoiceForm.controls["MONTO_3_USD"].value }}
+      </div>
+      <div class="product-bcv hide" [ngClass]="this.invoiceForm.controls['MONTO_3_BCV'].value > 0 ? '' : 'ngTransp'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_3_BCV"].value }}
+      </div>
+    </div>
+    <div class="d-flex flex-row product-row justify-content-between">
+      <div class="product-concept">
+        {{ this.invoiceForm.controls["CONCEPTO_4"].value }}
+      </div>
+      <div class="product-bs" [ngClass]="this.invoiceForm.controls['MONTO_4_BS'].value > 0 ? '' : 'ngTransp hide'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_4_BS"].value }}
+      </div>
+      <div class="product-usd hide" [ngClass]="this.invoiceForm.controls['MONTO_4_USD'].value > 0 ? '' : 'ngTransp'">
+        {{ "$" + this.invoiceForm.controls["MONTO_4_USD"].value }}
+      </div>
+      <div class="product-bcv hide" [ngClass]="this.invoiceForm.controls['MONTO_4_BCV'].value > 0 ? '' : 'ngTransp'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_4_BCV"].value }}
+      </div>
+    </div>
+    <div class="d-flex flex-row product-row justify-content-between">
+      <div class="product-concept">
+        {{ this.invoiceForm.controls["CONCEPTO_5"].value }}
+      </div>
+      <div class="product-bs" [ngClass]="this.invoiceForm.controls['MONTO_5_BS'].value > 0 ? '' : 'ngTransp hide'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_5_BS"].value }}
+      </div>
+      <div class="product-usd hide" [ngClass]="this.invoiceForm.controls['MONTO_5_USD'].value > 0 ? '' : 'ngTransp'">
+        {{ "$" + this.invoiceForm.controls["MONTO_5_USD"].value }}
+      </div>
+      <div class="product-bcv hide" [ngClass]="this.invoiceForm.controls['MONTO_5_BCV'].value > 0 ? '' : 'ngTransp'">
+        {{ "Bs. " + this.invoiceForm.controls["MONTO_5_BCV"].value }}
+      </div>
+    </div>
+    <div id="second-middle" class="d-flex flex-row">
+      <div class="observaciones">
+        <b>OBSERVACIONES:</b>
+        {{ this.invoiceForm.controls["OBSERVACIONES"].value }}
+      </div>
+      <div class="info-input">
+        <div class="d-flex flex-row">
+          <div class="second-middle-input"><b>SUBTOTAL:</b></div>
+          <div class="second-middle-info">
+            {{ "Bs. " + this.invoiceForm.controls["SUBTOTAL_BS"].value }}
+          </div>
+          <div class="second-middle-info hide">
+            {{ "$" + this.invoiceForm.controls["SUBTOTAL_USD"].value }}
+          </div>
+        </div>
+        <div class="d-flex flex-row">
+          <div class="second-middle-input"><b>IVA: EXENTO %:</b></div>
+          <div class="second-middle-info">0</div>
+        </div>
+        <div class="d-flex flex-row">
+          <div class="second-middle-input"><b>TOTAL:</b></div>
+          <div class="second-middle-info">
+            {{ "Bs. " + this.invoiceForm.controls["TOTAL_BS"].value }}
+          </div>
+          <div class="second-middle-info hide">
+            {{ "$" + this.invoiceForm.controls["TOTAL_USD"].value }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="bottom" class="d-flex flex-row invoice-minibox">
+    <div class="small-bottom-section">
+      <div class="bottom-subtitle"><b>EFECTIVO</b></div>
+      <div [ngClass]="this.invoiceForm.controls['EFECTIVO'].value == 0 || this.invoiceForm.controls['EFECTIVO'].value == null ? 'ngTransp hide' : ''" class="bottom-result">
+        {{ "Bs. " + this.invoiceForm.controls["EFECTIVO"].value }}
+      </div>
+    </div>
+    <div class="big-bottom-section">
+      <div class="bottom-subtitle"><b>NO. TRANSACCIÓN</b></div>
+      <div class="bottom-result d-flex flex-row">
+        <div class="type">{{ this.invoiceForm.controls["TIPO_TRANSACCION"].value }}</div>
+        <div>{{ this.invoiceForm.controls["NO_TRANSACCION"].value }}</div>
+        
+      </div>
+    </div>
+    <div class="big-bottom-section">
+      <div class="bottom-subtitle"><b>BANCO</b></div>
+      <div class="bottom-result">
+        {{ this.invoiceForm.controls["BANCO"].value }}
+      </div>
+    </div>
+    <div class="small-bottom-section">
+      <div class="bottom-subtitle"><b>MONTO</b></div>
+      <div class="bottom-result">
+        {{ "Bs. " + this.invoiceForm.controls["TOTAL_BS"].value }}
+      </div>
+    </div>
+  </div>
+  <div id="watermark" [ngClass]="this.invoiceForm.controls['ESTATUS'].value == 0 ? 'watermark' : 'hide-watermark'">
+    <h1>ANULADA</h1>
+  </div>
+</div>
+
+<div class="mt-3">
+  <button class="me-2" mat-raised-button color="warn" mat-dialog-close>
+    Cerrar
+  </button>
+  <button class="" mat-raised-button color="primary" (click)="triggerPrint()">Imprimir</button>
+  <button #print printSectionId="view-format" [useExistingCss]="true" ngxPrint hidden="true">Imprimir</button> 
+</div>
+</body>

@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { StartComponent } from './start/start.component';
+
+const routes: Routes = [
+  { path: "", 
+  children: [
+      { path: "", component: StartComponent },
+      { path: "inicio", component: StartComponent }
+  ] }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class StartRoutingModule { }

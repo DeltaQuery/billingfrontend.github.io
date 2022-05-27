@@ -1,0 +1,83 @@
+<h1 mat-dialog-title> {{ dialogTitle }} </h1>
+<hr>
+<form [formGroup]="customerForm">
+    <div mat-dialog-content>
+        <h2>Información del Representante</h2>
+        <div class="d-flex">
+            <mat-form-field appearance="outline" class="typeField">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="TIPO_REPRESENTANTE" [(value)]="id_type">
+                  <mat-option value="V">V-</mat-option>
+                  <mat-option value="E">E-</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="outline" class="idField">
+                <mat-label>Cédula de identidad</mat-label>
+                <input formControlName="CEDULA_REPRESENTANTE" id="cedula_representante" matInput placeholder="Cédula de identidad">
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre y apellido</mat-label>
+            <input formControlName="NOMBRES_REPRESENTANTE" matInput placeholder="Nombre y apellido">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Dirección</mat-label>
+            <input formControlName="DIRECCION_REPRESENTANTE" matInput placeholder="Dirección">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Teléfono celular</mat-label>
+            <input formControlName="TELEFONO_REPRESENTANTE" matInput placeholder="Teléfono celular">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input formControlName="CORREO_REPRESENTANTE" matInput placeholder="Correo electrónico">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>¿Desea agregar información distinta para la facturación?</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option value="no">No.</mat-option>
+              <mat-option value="yes">Sí.</mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+        <div *ngIf="selected == 'yes'">
+            <br>
+            <h2>Información del Cliente</h2>
+            <div class="d-flex">
+                <mat-form-field appearance="outline" class="typeField">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="TIPO_CLIENTE" [(value)]="id_type">
+                  <mat-option value="V">V-</mat-option>
+                  <mat-option value="E">E-</mat-option>
+                  <mat-option value="J">J-</mat-option>
+                  <mat-option value="G">G-</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="outline" class="idField">
+                <mat-label>Cédula/ identificación</mat-label>
+                <input formControlName="ID_CLIENTE" matInput placeholder="Cédula de identidad">
+            </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre y apellido / Razón social</mat-label>
+                <input formControlName="NOMBRES_CLIENTE" matInput placeholder="Nombre y apellido">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Dirección</mat-label>
+                <input formControlName="DIRECCION_CLIENTE" matInput placeholder="Dirección">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Teléfono celular</mat-label>
+                <input formControlName="TELEFONO_CLIENTE" matInput placeholder="Teléfono celular">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Correo electrónico</mat-label>
+                <input formControlName="CORREO_CLIENTE" matInput placeholder="Correo electrónico">
+            </mat-form-field>
+        </div>
+    </div>
+</form>
+    <div class="mt-2" mat-dialog-action [align]="'end'">
+    <button class="me-2" mat-raised-button color="warn" mat-dialog-close><mat-icon>close</mat-icon> Cerrar</button>
+    <button class="" mat-raised-button color="primary" [disabled]="!customerForm.valid" (click)="addCustomer()"><mat-icon>save</mat-icon> {{ actionBtn }} </button>
+    </div>

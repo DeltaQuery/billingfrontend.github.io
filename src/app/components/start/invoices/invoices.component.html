@@ -1,0 +1,22 @@
+<div id="container">
+    <h1><mat-icon>library_books</mat-icon> Últimas facturas</h1>
+    <hr>
+    <table class="table table-sm table-hover" *ngIf="invoices">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Total</th>
+            <th scope="col">Alumno</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let invoice of invoices">
+            <td> {{ invoice.FECHA_REGISTRO | date: "dd-MM-yy"  }} </td>
+            <td> {{ invoice.TOTAL_USD | currency }} </td>
+            <td> {{ invoice.NOMBRES_ALUMNO + " " + invoice.APELLIDOS_ALUMNO }} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+     
+    

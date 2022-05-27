@@ -1,0 +1,359 @@
+<app-by-customer id="individualBar" class="hide-section"></app-by-customer>
+<app-by-range id="rangeBar" class="hide-section"></app-by-range>
+<app-by-filter id="filterBar" class="hide-section"></app-by-filter>
+
+<div id="principalBar" class="container-fluid d-flex justify-content-between">
+  <div class="d-flex">
+    <button mat-raised-button class="create-btn" routerLink="/facturas/facturar">
+      <mat-icon>add</mat-icon>Nueva
+    </button>
+    <mat-form-field class="search-form-field" appearance="fill" floatLabel="never">
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="applyFilter()" type="text" [(ngModel)]="searchKey" />
+      <button *ngIf="searchKey" matSuffix mat-icon-button aria-label="Limpiar" (click)="cleanFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="action-buttons">
+    <button mat-raised-button class="action-button" (click)="individualButton()">
+      <mat-icon>person_outline</mat-icon>Individual
+    </button>
+    <button mat-raised-button class="action-button" (click)="rangeButton()">
+      <mat-icon>date_range</mat-icon>Rango
+    </button>
+    <button mat-raised-button class="action-button" (click)="filterButton()">
+      <mat-icon>filter_list</mat-icon>Filtro
+    </button>
+    <app-return-button class="action-button"></app-return-button>
+    <app-print-invoice-button class="action-button"></app-print-invoice-button>
+  </div>
+</div>
+
+<div id="pdfTable">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" multiTemplateDataRows>
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="expandedColumn" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="d-flex container-fluid">
+            <div class="expanded-box" id="generales-col">
+              <div>Generales:</div>
+              <div class="">
+                {{ "Fecha: " + (element.FECHA_REGISTRO | date: "dd-MM-yy") }}
+              </div>
+              <div class="">
+                {{ "Código: " + element.CODIGO_FACTURA }}
+              </div>
+              <div class="">
+                {{ "Estatus: " + element.ESTATUS }}
+              </div>
+            </div>
+
+            <div class="expanded-box" id="cliente-col">
+              <div>Cliente:</div>
+              <div class="">
+                {{ "Id.: " + element.TIPO_CLIENTE + element.ID_CLIENTE }}
+              </div>
+              <div class="">
+                {{ "Nombre: " + element.NOMBRES_CLIENTE }}
+              </div>
+              <div class="">
+                {{ "Telf.: " + element.TELEFONO_CLIENTE }}
+              </div>
+            </div>
+
+            <div class="expanded-box" id="alumno_col">
+              <div>Alumno:</div>
+              <div class="">
+                {{
+                "Nombre: " +
+                element.NOMBRES_ALUMNO +
+                " " +
+                element.APELLIDOS_ALUMNO
+                }}
+              </div>
+              <div class="">
+                {{ "Grado: " + element.GRADO_ALUMNO }}
+              </div>
+            </div>
+
+            <div class="expanded-box" id="conceptos_col">
+              <div>Conceptos:</div>
+              <div>
+                <div class="">
+                  {{ "1: " + element.CONCEPTO_1 }}
+                </div>
+                <div class="">
+                  {{
+                  "USD: " +
+                  element.MONTO_1_USD +
+                  " | " +
+                  "Bs: " +
+                  element.MONTO_1_BS
+                  }}
+                </div>
+              </div>
+              <div *ngIf="element.CONCEPTO_2">
+                <div class="">
+                  {{ "2: " + element.CONCEPTO_2 }}
+                </div>
+                <div class="">
+                  {{
+                  "USD: " +
+                  element.MONTO_2_USD +
+                  " | " +
+                  "Bs: " +
+                  element.MONTO_2_BS
+                  }}
+                </div>
+              </div>
+              <div *ngIf="element.CONCEPTO_3">
+                <div class="">
+                  {{ "3: " + element.CONCEPTO_3 }}
+                </div>
+                <div class="">
+                  {{
+                  "USD: " +
+                  element.MONTO_3_USD +
+                  " | " +
+                  "Bs: " +
+                  element.MONTO_3_BS
+                  }}
+                </div>
+              </div>
+              <div *ngIf="element.CONCEPTO_4">
+                <div class="">
+                  {{ "4: " + element.CONCEPTO_4 }}
+                </div>
+                <div class="">
+                  {{
+                  "USD: " +
+                  element.MONTO_4_USD +
+                  " | " +
+                  "Bs: " +
+                  element.MONTO_4_BS
+                  }}
+                </div>
+              </div>
+              <div *ngIf="element.CONCEPTO_5">
+                <div class="">
+                  {{ "5: " + element.CONCEPTO_5 }}
+                </div>
+                <div class="">
+                  {{
+                  "USD: " +
+                  element.MONTO_5_USD +
+                  " | " +
+                  "Bs: " +
+                  element.MONTO_5_BS
+                  }}
+                </div>
+              </div>
+            </div>
+
+            <div class="expanded-box" id="datos_col">
+              <div>Datos:</div>
+              <div class="">
+                {{ "Operación: " + element.CREDITO_CONTADO }}
+              </div>
+              <div class="">
+                {{ "Tipo: " + element.TIPO_TRANSACCION }}
+              </div>
+              <div class="">
+                {{ "No_Transc.: " + element.NO_TRANSACCION }}
+              </div>
+              <div class="">
+                {{ "Banco: " + element.BANCO }}
+              </div>
+              <div class="">
+                {{ "Efectivo: " + element.EFECTIVO }}
+              </div>
+            </div>
+
+            <div class="expanded-box" id="valor_col">
+              <div>Valor:</div>
+              <div class="">
+                {{ "Subtotal USD: " + element.SUBTOTAL_USD }}
+              </div>
+              <div class="">
+                {{ "Subtotal Bs.: " + element.SUBTOTAL_BS }}
+              </div>
+              <div class="">
+                {{ "Total USD: " + element.TOTAL_USD }}
+              </div>
+              <div class="">
+                {{ "Total Bs.: " + element.TOTAL_BS }}
+              </div>
+            </div>
+
+            <div *ngIf="element.OBSERVACIONES" class="expanded-box" id="otros_col">
+              <div class="">
+                {{ "Observaciones: " + element.OBSERVACIONES }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CODIGO_FACTURA">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CODIGO_FACTURA">
+        Cód.
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.CODIGO_FACTURA }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="FECHA_REGISTRO">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="FECHA_REGISTRO">
+        Fecha
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.FECHA_REGISTRO | date: "dd-MM-yy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ID_CLIENTE">
+      <th class="idClienteCol" mat-header-cell *matHeaderCellDef mat-sort-header="ID_CLIENTE">
+        ID de Cliente
+      </th>
+      <td class="idClienteCol" mat-cell *matCellDef="let element">
+        {{ element.TIPO_CLIENTE + "-" + element.ID_CLIENTE }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="NOMBRES_CLIENTE">
+      <th class="nombresClienteCol" mat-header-cell *matHeaderCellDef mat-sort-header="NOMBRES_CLIENTE">
+        Nombre del Cliente
+      </th>
+      <td class="nombresClienteCol" mat-cell *matCellDef="let element">{{ element.NOMBRES_CLIENTE }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="TELEFONO_CLIENTE">
+      <th class="telefonoClienteCol" mat-header-cell *matHeaderCellDef mat-sort-header="TELEFONO_CLIENTE">
+        Teléfono
+      </th>
+      <td class="telefonoClienteCol" mat-cell *matCellDef="let element">{{ element.TELEFONO_CLIENTE }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="GRADO_ALUMNO">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="GRADO_ALUMNO">
+        Grado
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.GRADO_ALUMNO }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="NOMBRES_ALUMNO">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="NOMBRES_ALUMNO">
+        Alumno
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.NOMBRES_ALUMNO + " " + element.APELLIDOS_ALUMNO }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CONCEPTO_TOTAL">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="CONCEPTO_TOTAL">
+        Concepto
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{
+        element.CONCEPTO_1 +
+        "|" +
+        element.CONCEPTO_2 +
+        "|" +
+        element.CONCEPTO_3 +
+        "|" +
+        element.CONCEPTO_4 +
+        "|" +
+        element.CONCEPTO_5 | productsView
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CREDITO_CONTADO">
+      <th class="modalidadCol" mat-header-cell *matHeaderCellDef mat-sort-header="CREDITO_CONTADO">
+        Modalidad
+      </th>
+      <td class="modalidadCol" mat-cell *matCellDef="let element">{{ element.CREDITO_CONTADO }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="TIPO_TRANSACCION">
+      <th class="tipoCol" mat-header-cell *matHeaderCellDef mat-sort-header="TIPO_TRANSACCION">
+        Tipo
+      </th>
+      <td class="tipoCol" mat-cell *matCellDef="let element">{{ element.TIPO_TRANSACCION }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="NO_TRANSACCION">
+      <th class="noTransaccionCol" mat-header-cell *matHeaderCellDef mat-sort-header="NO_TRANSACCION">
+        No. Transc.
+      </th>
+      <td class="noTransaccionCol" mat-cell *matCellDef="let element">{{ element.NO_TRANSACCION }}</td>
+    </ng-container>
+
+    <ng-container id="bancoCol" matColumnDef="BANCO">
+      <th class="bancoCol" mat-header-cell *matHeaderCellDef mat-sort-header="BANCO">
+        Banco
+      </th>
+      <td class="bancoCol" mat-cell *matCellDef="let element">{{ element.BANCO }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="EFECTIVO">
+      <th class="efectivoCol" mat-header-cell *matHeaderCellDef mat-sort-header="EFECTIVO">
+        Efectivo
+      </th>
+      <td class="efectivoCol" mat-cell *matCellDef="let element">{{ "Bs. " + element.EFECTIVO }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="TOTAL_BS">
+      <th class="totalBsCol" mat-header-cell *matHeaderCellDef mat-sort-header="TOTAL_BS">Total Bs.</th>
+      <td class="totalBsCol" mat-cell *matCellDef="let element">
+        {{ "Bs. " + element.TOTAL_BS }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TOTAL_USD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="TOTAL_USD">Total USD</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.TOTAL_USD | currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ESTATUS">
+      <th class="" mat-header-cell *matHeaderCellDef mat-sort-header="ESTATUS">Estatus</th>
+      <td class="" mat-cell *matCellDef="let element">
+        {{ element.ESTATUS | invoiceEstatusPipe }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th class="actionsCol" mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <td class="actionsCol" mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="viewInvoice(row)">
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
+        <button mat-icon-button (click)="printInvoice(row)">
+          <mat-icon>print</mat-icon>
+        </button>
+        <button *ngIf="row.ESTATUS == 1" mat-icon-button color="warn" (click)="removeInvoice(row)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+        <button *ngIf="row.ESTATUS == 0" mat-icon-button color="primary" (click)="removeInvoice(row)">
+          <mat-icon>restore</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row class="canceledInvoice" *matRowDef="let row; columns: displayedColumns" class="example-element-row"
+      [ngClass]="row.ESTATUS == 0 ? 'canceledInvoice' : ''" [class.example-expanded-row]="expandedElement === row"
+      (click)="expandedElement = expandedElement === row ? null : row"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+</div>
+
+<mat-paginator (page)="getPageDetails($event)" [pageSizeOptions]="[8, 20, 30, 40, 10000]" [pageSize]="8"
+  showFirstLastButtons=""></mat-paginator>
+
+<button #print printTitle="" printSectionId="pdfTable" [useExistingCss]="true" ngxPrint hidden="true">Imprimir</button>
