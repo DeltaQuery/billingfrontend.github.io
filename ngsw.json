@@ -1,0 +1,111 @@
+{
+  "configVersion": 1,
+  "timestamp": 1659574371266,
+  "index": "/billingfrontend.github.io/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/billingfrontend.github.io/143.e506c300286c0d06.js",
+        "/billingfrontend.github.io/17.00ac5348d4bc91ac.js",
+        "/billingfrontend.github.io/18.e6b887da39f48c6b.js",
+        "/billingfrontend.github.io/274.449fa9e46ec5f351.js",
+        "/billingfrontend.github.io/415.bfd94bbc52a73f90.js",
+        "/billingfrontend.github.io/445.c0ce18bfb3be2af4.js",
+        "/billingfrontend.github.io/446.197ae44bf927beea.js",
+        "/billingfrontend.github.io/729.9b8e2e6f3e00d776.js",
+        "/billingfrontend.github.io/809.0facff86ef825b5d.js",
+        "/billingfrontend.github.io/898.616b3f55e38f3c68.js",
+        "/billingfrontend.github.io/968.be6e97d73580749d.js",
+        "/billingfrontend.github.io/common.f33bafa721edfca2.js",
+        "/billingfrontend.github.io/index.html",
+        "/billingfrontend.github.io/main.a7fd3e9c083f221c.js",
+        "/billingfrontend.github.io/manifest.webmanifest",
+        "/billingfrontend.github.io/polyfills.4b554543e423fec4.js",
+        "/billingfrontend.github.io/runtime.645e93206188b131.js",
+        "/billingfrontend.github.io/scripts.615aaee90d6c9b86.js",
+        "/billingfrontend.github.io/styles.c01ac49c926f4863.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/billingfrontend.github.io/assets/favicon.png",
+        "/billingfrontend.github.io/assets/mericilogo.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "data-api",
+      "patterns": [
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/customers",
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/students",
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/invoices",
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/products"
+      ],
+      "strategy": "freshness",
+      "maxSize": 10,
+      "maxAge": 2592000000,
+      "timeoutMs": 5000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/billingfrontend.github.io/143.e506c300286c0d06.js": "5320f3107ab0f20bf5a19e43ac3f991dee13c691",
+    "/billingfrontend.github.io/17.00ac5348d4bc91ac.js": "c669d5065dd45d3b78def1f119dd5ce150a18353",
+    "/billingfrontend.github.io/18.e6b887da39f48c6b.js": "5dd6078993201a6b084afc669a60025cf34553a6",
+    "/billingfrontend.github.io/274.449fa9e46ec5f351.js": "fb38fa034eaa0554a22452186da9d701c72be086",
+    "/billingfrontend.github.io/415.bfd94bbc52a73f90.js": "bf6b352f690b0beb32426cea042cf64d4a0585d6",
+    "/billingfrontend.github.io/445.c0ce18bfb3be2af4.js": "237158795e0c6873b0d3802d3c863b97773c26e9",
+    "/billingfrontend.github.io/446.197ae44bf927beea.js": "d452ea17b10f4e8426a4b47e05f0cabcacde1f63",
+    "/billingfrontend.github.io/729.9b8e2e6f3e00d776.js": "f4d904bc2198dc49be6c807b82daf63d0de5c6ba",
+    "/billingfrontend.github.io/809.0facff86ef825b5d.js": "713cc20320a0a972d349db64794c5f72e4897e46",
+    "/billingfrontend.github.io/898.616b3f55e38f3c68.js": "87f2e67a5250b0825d3be0162146178ee6b91a0b",
+    "/billingfrontend.github.io/968.be6e97d73580749d.js": "39cf46a113ee0bdc65d7b4398bb3252a6c480087",
+    "/billingfrontend.github.io/assets/favicon.png": "ea60fb40d6fe60422f533c36994f120d08647430",
+    "/billingfrontend.github.io/assets/mericilogo.png": "580fa5531543a4aeeaeb93b3c338fcb73c606c8d",
+    "/billingfrontend.github.io/common.f33bafa721edfca2.js": "c2ce80c316511e01455bac2553fd0f09553c7dd9",
+    "/billingfrontend.github.io/index.html": "a5b108ca887b38be99551779a9e233e5ad69b6b3",
+    "/billingfrontend.github.io/main.a7fd3e9c083f221c.js": "76709595b87c86a410ed62cb67ab490cbf934538",
+    "/billingfrontend.github.io/manifest.webmanifest": "fed7b54b494acff2da374e4fd1d007eb259b7ee1",
+    "/billingfrontend.github.io/polyfills.4b554543e423fec4.js": "5ca2aa5bfab2bb22624e2bc6eec79bb4308a2043",
+    "/billingfrontend.github.io/runtime.645e93206188b131.js": "06d80181fcdbd3bfec03ed33bc74e4d1430dfbc5",
+    "/billingfrontend.github.io/scripts.615aaee90d6c9b86.js": "6ecdd4b774e85eb93a1a36e8e49015ad78f38ee2",
+    "/billingfrontend.github.io/styles.c01ac49c926f4863.css": "817847bf4148c26d5534343137c6400b1a57f4e1"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
