@@ -1,0 +1,111 @@
+{
+  "configVersion": 1,
+  "timestamp": 1659573259535,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/143.e506c300286c0d06.js",
+        "/17.00ac5348d4bc91ac.js",
+        "/18.e6b887da39f48c6b.js",
+        "/274.449fa9e46ec5f351.js",
+        "/415.bfd94bbc52a73f90.js",
+        "/445.c0ce18bfb3be2af4.js",
+        "/446.197ae44bf927beea.js",
+        "/729.9b8e2e6f3e00d776.js",
+        "/809.0facff86ef825b5d.js",
+        "/898.f18b1947c8100dd0.js",
+        "/968.be6e97d73580749d.js",
+        "/common.f33bafa721edfca2.js",
+        "/index.html",
+        "/main.a7fd3e9c083f221c.js",
+        "/manifest.webmanifest",
+        "/polyfills.4b554543e423fec4.js",
+        "/runtime.48a4ea712279470d.js",
+        "/scripts.615aaee90d6c9b86.js",
+        "/styles.c01ac49c926f4863.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/favicon.png",
+        "/assets/mericilogo.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "data-api",
+      "patterns": [
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/customers",
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/students",
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/invoices",
+        "https:\\/\\/billing-backend-1994\\.herokuapp\\.com\\/api\\/products"
+      ],
+      "strategy": "freshness",
+      "maxSize": 10,
+      "maxAge": 2592000000,
+      "timeoutMs": 5000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/143.e506c300286c0d06.js": "5320f3107ab0f20bf5a19e43ac3f991dee13c691",
+    "/17.00ac5348d4bc91ac.js": "c669d5065dd45d3b78def1f119dd5ce150a18353",
+    "/18.e6b887da39f48c6b.js": "5dd6078993201a6b084afc669a60025cf34553a6",
+    "/274.449fa9e46ec5f351.js": "fb38fa034eaa0554a22452186da9d701c72be086",
+    "/415.bfd94bbc52a73f90.js": "bf6b352f690b0beb32426cea042cf64d4a0585d6",
+    "/445.c0ce18bfb3be2af4.js": "237158795e0c6873b0d3802d3c863b97773c26e9",
+    "/446.197ae44bf927beea.js": "d452ea17b10f4e8426a4b47e05f0cabcacde1f63",
+    "/729.9b8e2e6f3e00d776.js": "f4d904bc2198dc49be6c807b82daf63d0de5c6ba",
+    "/809.0facff86ef825b5d.js": "713cc20320a0a972d349db64794c5f72e4897e46",
+    "/898.f18b1947c8100dd0.js": "6e80d9285ce8efca45f7032ea2085c3cb7713001",
+    "/968.be6e97d73580749d.js": "39cf46a113ee0bdc65d7b4398bb3252a6c480087",
+    "/assets/favicon.png": "ea60fb40d6fe60422f533c36994f120d08647430",
+    "/assets/mericilogo.png": "580fa5531543a4aeeaeb93b3c338fcb73c606c8d",
+    "/common.f33bafa721edfca2.js": "c2ce80c316511e01455bac2553fd0f09553c7dd9",
+    "/index.html": "85f7533797b45c24b25178a8c7c24adc19b65647",
+    "/main.a7fd3e9c083f221c.js": "76709595b87c86a410ed62cb67ab490cbf934538",
+    "/manifest.webmanifest": "fed7b54b494acff2da374e4fd1d007eb259b7ee1",
+    "/polyfills.4b554543e423fec4.js": "5ca2aa5bfab2bb22624e2bc6eec79bb4308a2043",
+    "/runtime.48a4ea712279470d.js": "4081b21308fa1b96737d57dd84a3bb6e842adeaf",
+    "/scripts.615aaee90d6c9b86.js": "6ecdd4b774e85eb93a1a36e8e49015ad78f38ee2",
+    "/styles.c01ac49c926f4863.css": "817847bf4148c26d5534343137c6400b1a57f4e1"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
